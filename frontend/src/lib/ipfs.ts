@@ -53,3 +53,96 @@ export async function uploadMoodToIPFS(
     throw error;
   }
 }
+
+export async function uploadRoastToIPFS(
+  image: File,
+  roastText: string,
+  timestamp: number
+) {
+  try {
+    if (!process.env.NEXT_PUBLIC_PINATA_JWT) {
+      throw new Error("Pinata JWT missing - please set NEXT_PUBLIC_PINATA_JWT");
+    }
+
+    console.log("Uploading roast image to Pinata...");
+
+    // Upload original image
+    const imageUpload = await pinata.upload.public.file(image);
+    console.log("Roast image uploaded:", imageUpload);
+
+    const imageUri = `ipfs://${imageUpload.cid}`;
+
+    // Create roast metadata
+    const metadata = {
+      name: "VibeCaster Roast",
+      description: roastText,
+      image: imageUri,
+      external_url: "https://vibecaster.xyz",
+      attributes: [
+        { trait_type: "Type", value: "Roast" },
+        { trait_type: "Generated", value: new Date(timestamp).toISOString() },
+        { trait_type: "Platform", value: "VibeCaster" },
+      ],
+    };
+
+    console.log("Uploading roast metadata to Pinata...");
+
+    // Upload metadata
+    const metadataUpload = await pinata.upload.public.json(metadata);
+    console.log("Roast metadata uploaded:", metadataUpload);
+
+    return {
+      imageHash: `ipfs://${imageUpload.cid}`,
+      metadataHash: `ipfs://${metadataUpload.cid}`
+    };
+  } catch (error) {
+    console.error("Roast IPFS upload failed:", error);
+    throw error;
+  }
+}
+
+export async function uploadChainToIPFS(
+  image: File,
+  promptText: string
+) {
+  try {
+    if (!process.env.NEXT_PUBLIC_PINATA_JWT) {
+      throw new Error("Pinata JWT missing - please set NEXT_PUBLIC_PINATA_JWT");
+    }
+
+    console.log("Uploading chain reaction image to Pinata...");
+
+    // Upload image
+    const imageUpload = await pinata.upload.public.file(image);
+    console.log("Chain image uploaded:", imageUpload);
+
+    const imageUri = `ipfs://${imageUpload.cid}`;
+
+    // Create chain metadata
+    const metadata = {
+      name: "VibeCaster Chain Reaction",
+      description: promptText,
+      image: imageUri,
+      external_url: "https://vibecaster.xyz",
+      attributes: [
+        { trait_type: "Type", value: "Chain Reaction" },
+        { trait_type: "Generated", value: new Date().toISOString() },
+        { trait_type: "Platform", value: "VibeCaster" },
+      ],
+    };
+
+    console.log("Uploading chain metadata to Pinata...");
+
+    // Upload metadata
+    const metadataUpload = await pinata.upload.public.json(metadata);
+    console.log("Chain metadata uploaded:", metadataUpload);
+
+    return {
+      imageHash: `ipfs://${imageUpload.cid}`,
+      metadataHash: `ipfs://${metadataUpload.cid}`
+    };
+  } catch (error) {
+    console.error("Chain IPFS upload failed:", error);
+    throw error;
+  }
+}
