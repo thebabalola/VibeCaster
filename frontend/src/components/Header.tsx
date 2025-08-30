@@ -1,16 +1,19 @@
 "use client";
 
-import { useState } from "react";
 import { useAccount } from "wagmi";
 import ConnectButton from "./ConnectButton";
-import { FaBars, FaTimes } from "react-icons/fa";
 import Image from "next/image";
 
 export default function Header() {
   const { address, isConnected } = useAccount();
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
 
-  const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
+  // Admin addresses - add your admin wallet addresses here
+  const adminAddresses = [
+    "0x1234567890123456789012345678901234567890", // Replace with actual admin addresses
+    // Add more admin addresses as needed
+  ];
+
+  const isAdmin = isConnected && address && adminAddresses.includes(address.toLowerCase());
 
   return (
     <header className="sticky top-0 z-50 backdrop-blur-md bg-black/20 border-b border-vibecaster-lavender/10">
@@ -25,47 +28,22 @@ export default function Header() {
               height={150}
               className="rounded-lg"
             />
-          </div>
+      </div>
 
           {/* Desktop Navigation - Only Admin */}
           <nav className="hidden md:flex items-center space-x-6">
-            {isConnected && (
+            {isAdmin && (
               <a href="/admin" className="text-vibecaster-pink-light hover:text-vibecaster-lavender transition-colors">
                 Admin
               </a>
             )}
-          </nav>
+            </nav>
 
           {/* Wallet Connection */}
           <div className="flex items-center space-x-4">
             <ConnectButton />
-            
-            {/* Mobile Menu Button */}
-            <button
-              onClick={toggleMenu}
-              className="md:hidden text-white hover:text-vibecaster-lavender transition-colors"
-            >
-              {isMenuOpen ? <FaTimes size={20} /> : <FaBars size={20} />}
-            </button>
           </div>
         </div>
-
-        {/* Mobile Navigation - Only Admin */}
-        {isMenuOpen && (
-          <nav className="md:hidden mt-4 pb-4 border-t border-vibecaster-lavender/20 pt-4">
-            <div className="flex flex-col space-y-3">
-              {isConnected && (
-                <a 
-                  href="/admin" 
-                  className="text-vibecaster-pink-light hover:text-vibecaster-lavender transition-colors py-2"
-                  onClick={() => setIsMenuOpen(false)}
-                >
-                  Admin
-                </a>
-              )}
-            </div>
-          </nav>
-        )}
       </div>
     </header>
   );
