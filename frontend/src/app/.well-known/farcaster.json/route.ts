@@ -14,7 +14,7 @@ function withValidProperties(properties: Record<string, undefined | string | str
 }
 
 export async function GET() {
-  const URL = "https://mintmymood.vercel.app";
+  const URL = "https://vibecasters.vercel.app";
   return Response.json({
     accountAssociation: {
       header: process.env.FARCASTER_HEADER,
@@ -23,22 +23,22 @@ export async function GET() {
     },
     frame: withValidProperties({
       version: '1',
-      name: 'MintMyMood',
-      subtitle: 'Mint your daily mood as NFT',
-      description: 'Transform your daily emotions into unique NFTs and share your mood journey with friends',
+      name: 'VibeCaster',
+      subtitle: 'The Future of Social on Farcaster',
+      description: 'AI roasts, icebreakers, and viral challenges - enhance your social interaction and engagement within the Farcaster ecosystem',
       screenshotUrls: [],
-      iconUrl: 'https://mintmymood.vercel.app/og.png',
-      splashImageUrl: 'https://mintmymood.vercel.app/mym-logo.png',
-      splashBackgroundColor: '#FEFCE8',
+      iconUrl: 'https://vibecasters.vercel.app/og.png',
+      splashImageUrl: 'https://vibecasters.vercel.app/vibeCaster-logo.png',
+      splashBackgroundColor: '#0C0420',
       homeUrl: URL,
       webhookUrl: `${URL}/api/webhook`,
       primaryCategory: 'social',
-      tags: [],
-      heroImageUrl: 'https://mintmymood.vercel.app/og.png',
-      tagline: 'Mint instantly',
-      ogTitle: 'MintMyMood',
-      ogDescription: 'Fast, fun, social mood minting',
-      ogImageUrl: 'https://mintmymood.vercel.app/og.png',
+      tags: ['ai', 'roasts', 'icebreakers', 'viral', 'challenges', 'social', 'farcaster'],
+      heroImageUrl: 'https://vibecasters.vercel.app/og.png',
+      tagline: 'AI roasts, icebreakers & viral challenges',
+      ogTitle: 'VibeCaster',
+      ogDescription: 'The Future of Social on Farcaster - AI roasts, icebreakers, and viral challenges',
+      ogImageUrl: 'https://vibecasters.vercel.app/og.png',
       // use only while testing
       noindex: true,
     }),

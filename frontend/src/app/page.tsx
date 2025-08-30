@@ -4,16 +4,15 @@ import "./globals.css";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 import VibeCasterDashboard from "../components/VibeCasterDashboard";
-// import { useMiniKit } from '@coinbase/onchainkit/minikit';
-// import { useEffect } from 'react';
+import { useMiniKit } from '@coinbase/onchainkit/minikit';
+import { useEffect } from 'react';
 
 export default function Home() {
-  // Preserve MiniKit functionality (temporarily commented)
-  // const { setFrameReady, isFrameReady } = useMiniKit();
+  const { setFrameReady, isFrameReady } = useMiniKit();
 
-  // useEffect(() => {
-  //   if (!isFrameReady) setFrameReady();
-  // }, [isFrameReady, setFrameReady]);
+  useEffect(() => {
+    if (!isFrameReady) setFrameReady();
+  }, [isFrameReady, setFrameReady]);
 
   return (
     <div className="min-h-screen vibecaster-bg flex flex-col">
