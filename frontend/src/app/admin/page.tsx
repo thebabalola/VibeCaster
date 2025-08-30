@@ -1221,18 +1221,18 @@ export default function AdminPage() {
         ) : (
           <main className="container mx-auto px-4 py-8 w-full">
             {/* Admin Header */}
-            <div className="flex items-center justify-between mb-8">
+            <div className="flex flex-col md:flex-row md:items-center md:justify-between mb-6 md:mb-8 gap-4 md:gap-0">
               <div>
-                <h1 className="text-3xl font-bold text-white mb-2">
-                  <FaCrown className="inline text-vibecaster-lavender mr-3" />
+                <h1 className="text-xl md:text-3xl font-bold text-white mb-2">
+                  <FaCrown className="inline text-vibecaster-lavender mr-2 md:mr-3" />
                   VibeCaster Admin
                 </h1>
-                <p className="text-vibecaster-pink-light">
+                <p className="text-xs md:text-sm text-vibecaster-pink-light">
                   Platform management and analytics
                 </p>
               </div>
-              <div className="text-right">
-                <p className="text-sm text-vibecaster-pink-light">Admin Access</p>
+              <div className="text-left md:text-right">
+                <p className="text-xs md:text-sm text-vibecaster-pink-light">Admin Access</p>
                 <p className="text-xs text-white/60 font-mono">
                   {address?.slice(0, 6)}...{address?.slice(-4)}
                 </p>
@@ -1240,7 +1240,7 @@ export default function AdminPage() {
             </div>
 
             {/* Navigation Tabs */}
-            <div className="flex flex-wrap gap-2 mb-8">
+            <div className="flex flex-wrap gap-1 md:gap-2 mb-6 md:mb-8">
               {tabs.map((tab) => {
                 const Icon = tab.icon;
                 const isActive = activeTab === tab.id;
@@ -1249,14 +1249,14 @@ export default function AdminPage() {
                   <button
                     key={tab.id}
                     onClick={() => setActiveTab(tab.id)}
-                    className={`flex items-center gap-2 px-4 py-2 rounded-lg transition-all duration-300 border ${
+                    className={`flex items-center gap-1 md:gap-2 px-2 md:px-4 py-1.5 md:py-2 rounded-lg transition-all duration-300 border ${
                       isActive
                         ? "bg-vibecaster-lavender text-white shadow-lg shadow-vibecaster-lavender/25 border-vibecaster-lavender"
                         : "text-white hover:bg-vibecaster-lavender/20 hover:shadow-md border-vibecaster-lavender/20"
                     }`}
                   >
-                    <Icon size={16} />
-                    <span className="text-sm font-medium">{tab.label}</span>
+                    <Icon size={14} className="md:w-4 md:h-4" />
+                    <span className="text-xs md:text-sm font-medium">{tab.label}</span>
                   </button>
                 );
               })}
