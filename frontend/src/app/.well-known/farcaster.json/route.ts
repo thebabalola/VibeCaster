@@ -24,7 +24,7 @@ export async function GET() {
     frame: withValidProperties({
       version: '1',
       name: 'VibeCaster',
-      subtitle: 'Social AI Roasts and Challenges',
+      subtitle: 'AI Roasts and Challenges',
       description: 'AI roasts, icebreakers, and viral challenges - enhance your social interaction and engagement within the Farcaster ecosystem',
       screenshotUrls: [],
       iconUrl: 'https://vibecasters.vercel.app/og.png',

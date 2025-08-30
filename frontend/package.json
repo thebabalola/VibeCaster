@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@coinbase/onchainkit": "^0.38.19",
+    "@farcaster/miniapp-wagmi-connector": "^1.0.0",
     "@google/generative-ai": "^0.24.1",
     "@huggingface/inference": "^4.5.1",
     "@iconify/react": "^6.0.0",

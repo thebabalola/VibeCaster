@@ -19,8 +19,8 @@ const getWalletConnectConnector = () => {
       metadata: {
         name: "VibeCaster",
         description: "The Future of Social on Farcaster - AI roasts, icebreakers, and viral challenges",
-        url: "https://vibecaster.vercel.app", // Updated to VibeCaster URL
-        icons: ["https://vibecaster.vercel.app/vibeCaster-logo.png"], // Updated to VibeCaster logo
+        url: "https://vibecasters.vercel.app", // Updated to correct URL
+        icons: ["https://vibecasters.vercel.app/vibeCaster-logo.png"], // Updated to correct URL
       },
     });
   }
@@ -34,13 +34,18 @@ export const config = createConfig({
   },
   connectors: [
     // Farcaster Mini App connector as the primary option
-    farcasterMiniApp(),
+    farcasterMiniApp({
+      // Ensure proper configuration for Farcaster Mini App
+      appName: "VibeCaster",
+      appDescription: "The Future of Social on Farcaster",
+      appIcon: "https://vibecasters.vercel.app/vibeCaster-logo.png",
+    }),
     injected({
       target: "metaMask",
     }),
     metaMask(),
     coinbaseWallet({
-      appName: "VibeCaster", // Updated to VibeCaster
+      appName: "VibeCaster",
     }),
     getWalletConnectConnector(),
   ],

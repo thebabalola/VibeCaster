@@ -28,7 +28,7 @@ const WalletModal = () => {
                        navigator.userAgent.includes('Warpcast') ||
                        window.location.href.includes('miniapps') ||
                        window.location.href.includes('oXpRXDCzmUMJ') ||
-                       window.location.href.includes('mintmymood') ||
+                       window.location.href.includes('vibecasters') ||
                        // Check for Farcaster-specific query parameters
                        window.location.search.includes('farcaster') ||
                        // Check for Farcaster-specific headers or context
@@ -461,7 +461,7 @@ const WalletModal = () => {
               </div>
 
               <p className="text-[#666666] text-[10px] mt-3 text-center">
-                By connecting a wallet, you agree to MintMyMood's Terms of
+                By connecting a wallet, you agree to VibeCaster's Terms of
                 Service
               </p>
             </div>
