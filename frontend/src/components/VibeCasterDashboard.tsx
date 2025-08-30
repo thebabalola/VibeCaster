@@ -48,7 +48,8 @@ export default function VibeCasterDashboard() {
           {/* <span className="text-white"> fam!</span> */}
         </h1>
         <p className="text-base md:text-xl text-vibecaster-light-purple mb-4 md:mb-6">
-          Another day to roast, create & vibe! Let's make some magic happen
+          Another day to roast, create & vibe! <br className="hidden md:block" />
+          Share your <span className="font-bold" style={{ color: '#9F6496' }}>epic moments and vibes</span> with your social community on X, Farcaster & beyond! 🚀✨
         </p>
         <div className="flex justify-center space-x-2 md:space-x-4 text-xs md:text-sm">
           <span className="bg-vibecaster-lavender/20 text-vibecaster-lavender px-2 md:px-3 py-1 rounded-full">
