@@ -28,7 +28,7 @@ export async function GET() {
       description: 'AI roasts, icebreakers, and viral challenges - enhance your social interaction and engagement within the Farcaster ecosystem',
       screenshotUrls: [],
       iconUrl: 'https://vibecasters.vercel.app/og.png',
-      splashImageUrl: 'https://vibecasters.vercel.app/vibeCaster-logo.png',
+      splashImageUrl: 'https://vibecasters.vercel.app/vibecaster-logo.png',
       splashBackgroundColor: '#0C0420',
       homeUrl: URL,
       webhookUrl: `${URL}/api/webhook`,
