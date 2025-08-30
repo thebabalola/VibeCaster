@@ -1,25 +1,22 @@
 "use client";
 
-import { FaTwitter, FaGithub, FaDiscord } from "react-icons/fa";
+import Image from "next/image";
+import Link from "next/link";
 
 export default function Footer() {
   return (
-    <footer className="glass-effect border-t border-vibecaster-lavender/20 mt-auto">
+    <footer className="bg-gradient-to-r from-vibecaster-dark to-vibecaster-purple-dark border-t border-vibecaster-lavender/20 mt-auto">
       <div className="container mx-auto px-4 py-6">
         <div className="flex flex-col md:flex-row items-center justify-between">
           {/* VibeCaster Brand */}
           <div className="flex items-center space-x-3 mb-4 md:mb-0">
-            <div className="w-6 h-6 bg-gradient-to-br from-vibecaster-lavender to-vibecaster-pink-light rounded flex items-center justify-center">
-              <span className="text-white font-bold text-xs">VC</span>
-            </div>
-            <div>
-              <p className="text-sm text-white">
-                <span className="text-vibecaster-lavender">Vibe</span>
-                <span className="text-red-500">e</span>
-                <span className="text-white">Caster</span>
-              </p>
-              <p className="text-xs text-vibecaster-pink-light">The Future of Social on Farcaster</p>
-            </div>
+            <Image
+              src="/vibecaster-logo.png"
+              alt="VibeCaster Logo"
+              width={100}
+              height={100}
+              className="rounded-lg"
+            />
           </div>
 
           {/* Social Links */}
@@ -30,23 +27,27 @@ export default function Footer() {
               rel="noopener noreferrer"
               className="text-vibecaster-pink-light hover:text-vibecaster-lavender transition-colors"
             >
-              <FaTwitter size={20} />
+              <Image
+                src="/twitter-x.svg"
+                alt="X (Twitter)"
+                width={20}
+                height={20}
+                className="filter brightness-0 invert"
+              />
             </a>
             <a
-              href="https://github.com/vibecaster"
+              href="https://warpcast.com/vibecaster"
               target="_blank"
               rel="noopener noreferrer"
               className="text-vibecaster-pink-light hover:text-vibecaster-lavender transition-colors"
             >
-              <FaGithub size={20} />
-            </a>
-            <a
-              href="https://discord.gg/vibecaster"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-vibecaster-pink-light hover:text-vibecaster-lavender transition-colors"
-            >
-              <FaDiscord size={20} />
+              <Image
+                src="/farcaster.svg"
+                alt="Farcaster"
+                width={20}
+                height={20}
+                className="filter brightness-0 invert"
+              />
             </a>
           </div>
         </div>
@@ -54,7 +55,7 @@ export default function Footer() {
         {/* Copyright */}
         <div className="mt-4 pt-4 border-t border-vibecaster-lavender/10 text-center">
           <p className="text-xs text-vibecaster-pink-light">
-            © 2024 VibeCaster. Built on Base. Powered by Farcaster.
+            © 2025 <Link href="/admin" className="hover:text-vibecaster-lavender transition-colors">VibeCaster</Link>. Built on Base. Powered by Farcaster.
           </p>
         </div>
       </div>
