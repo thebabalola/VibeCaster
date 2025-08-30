@@ -391,7 +391,7 @@ export default function RoastMe() {
                 {isRoasting ? (
                   <>
                     <FaSpinner className="animate-spin md:w-4 md:h-4" size={14} />
-                    AI is analyzing your selfie...
+                    🔥 Brace yourself... your roast is coming! 🔥
                   </>
                 ) : (
                   <>
@@ -415,7 +415,7 @@ export default function RoastMe() {
                     {isLoading || isSubmitting || isConfirmingSubmit ? (
                       <>
                         <FaSpinner className="animate-spin md:w-4 md:h-4" size={14} />
-                        Submitting...
+                        🚀 Launching your roast to the blockchain! 🚀
                       </>
                     ) : (
                       <>
@@ -448,7 +448,7 @@ export default function RoastMe() {
           <div className="mt-3 md:mt-4 p-2 md:p-3 bg-green-500/20 border border-green-500/30 rounded-lg">
             <p className="text-green-400 text-xs md:text-sm flex items-center gap-2">
               <FaCheckCircle size={14} className="md:w-4 md:h-4" />
-              Roast submitted successfully! Check your transaction on the blockchain.
+              🎉 Your roast is live! The community is about to witness your comedic genius! 🎉
             </p>
           </div>
         )}
