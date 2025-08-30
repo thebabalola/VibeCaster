@@ -285,11 +285,11 @@ export default function RoastMe() {
   return (
     <div className="space-y-6">
       {/* Header with Stats */}
-      <div className="text-center mb-8">
-        <h2 className="text-2xl font-bold text-white mb-2 flex items-center justify-center gap-2">
+      <div className="text-center mb-6 md:mb-8">
+        <h2 className="text-xl md:text-2xl font-bold text-white mb-2 flex items-center justify-center gap-2">
           <FaFire className="text-red-500" /> Roast Me
         </h2>
-        <p className="text-vibecaster-pink-light mb-4">
+        <p className="text-sm md:text-base text-vibecaster-pink-light mb-4">
           Upload your selfie and let AI roast you! Get points for being brave enough to take the heat!
         </p>
         
@@ -297,13 +297,13 @@ export default function RoastMe() {
         <div className="flex justify-center">
           <div className="bg-vibecaster-dark/50 backdrop-blur-sm rounded-lg border border-vibecaster-lavender/20">
             <div className="flex">
-              <div className="px-4 py-2 text-center border-r border-vibecaster-lavender/20">
-                <div className="text-white font-bold">{totalRoasts}</div>
+              <div className="px-3 md:px-4 py-2 text-center border-r border-vibecaster-lavender/20">
+                <div className="text-white font-bold text-sm md:text-base">{totalRoasts}</div>
                 <div className="text-vibecaster-pink-light text-xs">Total Roasts</div>
               </div>
               {isConnected && (
-                <div className="px-4 py-2 text-center border-r border-vibecaster-lavender/20 last:border-r-0">
-                  <div className="text-white font-bold">{userRoastCount}</div>
+                <div className="px-3 md:px-4 py-2 text-center border-r border-vibecaster-lavender/20 last:border-r-0">
+                  <div className="text-white font-bold text-sm md:text-base">{userRoastCount}</div>
                   <div className="text-vibecaster-pink-light text-xs">Your Roasts</div>
                 </div>
               )}
@@ -313,36 +313,36 @@ export default function RoastMe() {
       </div>
 
       {/* Main Roast Form */}
-      <div className="space-y-6">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+      <div className="space-y-4 md:space-y-6">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 md:gap-6">
           {/* Image Upload Section */}
           <div>
-            <h3 className="text-lg font-semibold text-white mb-4">Upload Your Selfie</h3>
+            <h3 className="text-base md:text-lg font-semibold text-white mb-3 md:mb-4">Upload Your Selfie</h3>
             
             {/* Image Preview */}
             {imagePreview && (
-              <div className="relative mb-4">
+              <div className="relative mb-3 md:mb-4">
                 <Image
                   src={imagePreview}
                   alt="Selected image"
                   width={300}
                   height={300}
-                  className="w-full h-64 object-cover rounded-lg"
+                  className="w-full h-48 md:h-64 object-cover rounded-lg"
                 />
                 <button
                   onClick={clearForm}
-                  className="absolute top-2 right-2 w-8 h-8 bg-red-500 hover:bg-red-600 text-white rounded-full flex items-center justify-center transition-colors"
+                  className="absolute top-2 right-2 w-6 h-6 md:w-8 md:h-8 bg-red-500 hover:bg-red-600 text-white rounded-full flex items-center justify-center transition-colors"
                 >
-                  <FaTimes size={14} />
+                  <FaTimes size={12} className="md:w-3.5 md:h-3.5" />
                 </button>
               </div>
             )}
 
             {/* Drag and Drop Area */}
             {!imagePreview && (
-              <div className="border-2 border-dashed border-vibecaster-lavender/20 rounded-lg p-8 text-center mb-4">
-                <FaImage className="text-4xl text-vibecaster-lavender/50 mx-auto mb-4" />
-                <p className="text-vibecaster-pink-light mb-4">
+              <div className="border-2 border-dashed border-vibecaster-lavender/20 rounded-lg p-4 md:p-8 text-center mb-3 md:mb-4 h-52 md:h-60 flex flex-col items-center justify-center">
+                <FaImage className="text-2xl md:text-4xl text-vibecaster-lavender/50 mx-auto mb-2 md:mb-4" />
+                <p className="text-sm md:text-base text-vibecaster-pink-light mb-2 md:mb-4">
                   Drag and drop your image here, or click to browse
                 </p>
                 <p className="text-xs text-vibecaster-pink-light">
@@ -352,19 +352,19 @@ export default function RoastMe() {
             )}
 
             {/* Upload Buttons */}
-            <div className="flex gap-3">
+            <div className="flex gap-2 md:gap-3">
               <button
                 onClick={handleCameraCapture}
-                className="flex-1 bg-vibecaster-lavender hover:bg-vibecaster-lavender/80 text-white px-4 py-3 rounded-lg transition-colors flex items-center justify-center gap-2"
+                className="flex-1 bg-vibecaster-lavender hover:bg-vibecaster-lavender/80 text-white px-3 md:px-4 py-2 md:py-3 rounded-lg transition-colors flex items-center justify-center gap-2 text-sm md:text-base"
               >
-                <FaCamera size={16} />
+                <FaCamera size={14} className="md:w-4 md:h-4" />
                 Camera
               </button>
               <button
                 onClick={() => fileInputRef.current?.click()}
-                className="flex-1 bg-vibecaster-purple-dark hover:bg-vibecaster-purple-dark/80 text-white px-4 py-3 rounded-lg transition-colors flex items-center justify-center gap-2"
+                className="flex-1 bg-vibecaster-purple-dark hover:bg-vibecaster-purple-dark/80 text-white px-3 md:px-4 py-2 md:py-3 rounded-lg transition-colors flex items-center justify-center gap-2 text-sm md:text-base"
               >
-                <FaUpload size={16} />
+                <FaUpload size={14} className="md:w-4 md:h-4" />
                 Upload
               </button>
             </div>
@@ -380,46 +380,46 @@ export default function RoastMe() {
 
           {/* Roast Generation Section */}
           <div>
-            <h3 className="text-lg font-semibold text-white mb-4">Generate Your Roast</h3>
+            <h3 className="text-base md:text-lg font-semibold text-white mb-3 md:mb-4">Generate Your Roast</h3>
             
             {!roastResult ? (
               <button
                 onClick={generateRoast}
                 disabled={!selectedImage || isRoasting}
-                className="w-full bg-gradient-to-r from-red-500 to-pink-500 hover:from-red-600 hover:to-pink-600 disabled:opacity-50 disabled:cursor-not-allowed text-white px-6 py-4 rounded-lg transition-all duration-300 flex items-center justify-center gap-2 font-semibold"
+                className="w-full bg-gradient-to-r from-red-500 to-pink-500 hover:from-red-600 hover:to-pink-600 disabled:opacity-50 disabled:cursor-not-allowed text-white px-4 md:px-6 py-3 md:py-4 rounded-lg transition-all duration-300 flex items-center justify-center gap-2 font-semibold text-sm md:text-base"
               >
                 {isRoasting ? (
                   <>
-                    <FaSpinner className="animate-spin" size={16} />
+                    <FaSpinner className="animate-spin md:w-4 md:h-4" size={14} />
                     AI is analyzing your selfie...
                   </>
                 ) : (
                   <>
-                    <FaFire size={16} />
+                    <FaFire size={14} className="md:w-4 md:h-4" />
                     Generate AI Roast
                   </>
                 )}
               </button>
             ) : (
-              <div className="space-y-4">
-                <div className="bg-vibecaster-purple-dark/20 p-4 rounded-lg">
+              <div className="space-y-3 md:space-y-4">
+                <div className="bg-vibecaster-purple-dark/20 p-3 md:p-4 rounded-lg">
                   <p className="text-white text-sm leading-relaxed">{roastResult}</p>
                 </div>
                 
-                <div className="flex gap-3">
+                <div className="flex gap-2 md:gap-3">
                   <button
                     onClick={submitRoastToContract}
                     disabled={isLoading || isSubmitting || isConfirmingSubmit}
-                    className="flex-1 bg-vibecaster-lavender hover:bg-vibecaster-lavender/80 disabled:opacity-50 disabled:cursor-not-allowed text-white px-4 py-3 rounded-lg transition-colors flex items-center justify-center gap-2"
+                    className="flex-1 bg-vibecaster-lavender hover:bg-vibecaster-lavender/80 disabled:opacity-50 disabled:cursor-not-allowed text-white px-3 md:px-4 py-2 md:py-3 rounded-lg transition-colors flex items-center justify-center gap-2 text-sm md:text-base"
                   >
                     {isLoading || isSubmitting || isConfirmingSubmit ? (
                       <>
-                        <FaSpinner className="animate-spin" size={16} />
+                        <FaSpinner className="animate-spin md:w-4 md:h-4" size={14} />
                         Submitting...
                       </>
                     ) : (
                       <>
-                        <FaCheckCircle size={16} />
+                        <FaCheckCircle className="md:w-4 md:h-4" size={14} />
                         Submit Roast
                       </>
                     )}
@@ -427,7 +427,7 @@ export default function RoastMe() {
                   <button
                     onClick={generateRoast}
                     disabled={isRoasting}
-                    className="px-4 py-3 border border-vibecaster-lavender text-vibecaster-lavender hover:bg-vibecaster-lavender hover:text-white rounded-lg transition-colors"
+                    className="px-3 md:px-4 py-2 md:py-3 border border-vibecaster-lavender text-vibecaster-lavender hover:bg-vibecaster-lavender hover:text-white rounded-lg transition-colors text-sm md:text-base"
                   >
                     Regenerate
                   </button>
@@ -439,15 +439,15 @@ export default function RoastMe() {
 
         {/* Error/Success Display */}
         {error && (
-          <div className="mt-4 p-3 bg-red-500/20 border border-red-500/30 rounded-lg">
-            <p className="text-red-400 text-sm">{error}</p>
+          <div className="mt-3 md:mt-4 p-2 md:p-3 bg-red-500/20 border border-red-500/30 rounded-lg">
+            <p className="text-red-400 text-xs md:text-sm">{error}</p>
           </div>
         )}
 
         {isSubmitSuccess && (
-          <div className="mt-4 p-3 bg-green-500/20 border border-green-500/30 rounded-lg">
-            <p className="text-green-400 text-sm flex items-center gap-2">
-              <FaCheckCircle size={16} />
+          <div className="mt-3 md:mt-4 p-2 md:p-3 bg-green-500/20 border border-green-500/30 rounded-lg">
+            <p className="text-green-400 text-xs md:text-sm flex items-center gap-2">
+              <FaCheckCircle size={14} className="md:w-4 md:h-4" />
               Roast submitted successfully! Check your transaction on the blockchain.
             </p>
           </div>
@@ -455,34 +455,34 @@ export default function RoastMe() {
 
         {/* Share Options */}
         {showShareOptions && roastResult && (
-          <div className="mt-6 p-4 bg-vibecaster-purple-dark/20 rounded-lg">
-            <h4 className="text-white font-semibold mb-3 flex items-center gap-2">
-              <FaShare size={16} />
+          <div className="mt-4 md:mt-6 p-3 md:p-4 bg-vibecaster-purple-dark/20 rounded-lg">
+            <h4 className="text-white font-semibold mb-2 md:mb-3 flex items-center gap-2 text-sm md:text-base">
+              <FaShare size={14} className="md:w-4 md:h-4" />
               Share Your Roast!
             </h4>
-            <p className="text-vibecaster-pink-light text-sm mb-4">
+            <p className="text-vibecaster-pink-light text-xs md:text-sm mb-3 md:mb-4">
               Spread the laughter! Share your roast with the world! 😂
             </p>
-            <div className="flex flex-wrap gap-3">
+            <div className="flex flex-wrap gap-2 md:gap-3">
               <button
                 onClick={shareToFarcaster}
-                className="bg-purple-600 hover:bg-purple-700 text-white px-4 py-2 rounded-lg transition-colors flex items-center gap-2"
+                className="bg-purple-600 hover:bg-purple-700 text-white px-3 md:px-4 py-2 rounded-lg transition-colors flex items-center gap-2 text-xs md:text-sm"
               >
-                <FaShare size={14} />
+                <FaShare size={12} className="md:w-3.5 md:h-3.5" />
                 Share to Farcaster
               </button>
               <button
                 onClick={shareToTwitter}
-                className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg transition-colors flex items-center gap-2"
+                className="bg-blue-500 hover:bg-blue-600 text-white px-3 md:px-4 py-2 rounded-lg transition-colors flex items-center gap-2 text-xs md:text-sm"
               >
-                <FaTwitter size={14} />
+                <FaTwitter size={12} className="md:w-3.5 md:h-3.5" />
                 Share to Twitter
               </button>
               <button
                 onClick={copyToClipboard}
-                className="bg-vibecaster-lavender hover:bg-vibecaster-lavender/80 text-white px-4 py-2 rounded-lg transition-colors flex items-center gap-2"
+                className="bg-vibecaster-lavender hover:bg-vibecaster-lavender/80 text-white px-3 md:px-4 py-2 rounded-lg transition-colors flex items-center gap-2 text-xs md:text-sm"
               >
-                <FaShare size={14} />
+                <FaShare size={12} className="md:w-3.5 md:h-3.5" />
                 Copy Text
               </button>
             </div>
@@ -492,43 +492,43 @@ export default function RoastMe() {
 
       {/* Roast Gallery */}
       {roastHistory.length > 0 && (
-        <div className="space-y-4">
-          <h3 className="text-lg font-semibold text-white mb-4 flex items-center gap-2">
-            <FaEye size={16} />
+        <div className="space-y-3 md:space-y-4">
+          <h3 className="text-base md:text-lg font-semibold text-white mb-3 md:mb-4 flex items-center gap-2">
+            <FaEye size={14} className="md:w-4 md:h-4" />
             Your Recent Roasts
           </h3>
           
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 md:gap-4">
             {roastHistory.map((roast) => (
-              <div key={roast.id} className="bg-vibecaster-purple-dark/20 p-4 rounded-lg">
-                <div className="relative mb-3">
+              <div key={roast.id} className="bg-vibecaster-purple-dark/20 p-3 md:p-4 rounded-lg">
+                <div className="relative mb-2 md:mb-3">
                   <Image
                     src={roast.image}
                     alt="Roast selfie"
                     width={200}
                     height={200}
-                    className="w-full h-32 object-cover rounded-lg"
+                    className="w-full h-24 md:h-32 object-cover rounded-lg"
                   />
-                  <div className="absolute top-2 right-2">
-                    <div className="w-6 h-6 rounded-full bg-red-500/20 flex items-center justify-center">
-                      <FaFire size={12} className="text-red-400" />
+                  <div className="absolute top-1 md:top-2 right-1 md:right-2">
+                    <div className="w-5 h-5 md:w-6 md:h-6 rounded-full bg-red-500/20 flex items-center justify-center">
+                      <FaFire size={10} className="md:w-3 md:h-3 text-red-400" />
                     </div>
                   </div>
                 </div>
                 
-                <p className="text-white text-xs mb-3 line-clamp-3 leading-relaxed">
+                <p className="text-white text-xs mb-2 md:mb-3 line-clamp-3 leading-relaxed">
                   {roast.roast}
                 </p>
                 
                 <div className="flex items-center justify-between text-xs text-vibecaster-pink-light">
                   <span>{roast.timestamp.toLocaleDateString()}</span>
-                  <div className="flex items-center gap-2">
+                  <div className="flex items-center gap-1 md:gap-2">
                     <span className="flex items-center gap-1">
-                      <FaHeart size={10} className="text-red-400" />
+                      <FaHeart size={8} className="md:w-2.5 md:h-2.5 text-red-400" />
                       {roast.funnyVotes}
                     </span>
                     <span className="flex items-center gap-1">
-                      <FaThumbsDown size={10} className="text-gray-400" />
+                      <FaThumbsDown size={8} className="md:w-2.5 md:h-2.5 text-gray-400" />
                       {roast.mehVotes}
                     </span>
                   </div>
