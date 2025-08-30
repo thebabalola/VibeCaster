@@ -10,13 +10,15 @@ export default function Footer() {
         <div className="flex flex-col md:flex-row items-center justify-between">
           {/* VibeCaster Brand */}
           <div className="flex items-center space-x-3 mb-4 md:mb-0">
-            <Image
-              src="/vibecaster-logo.png"
-              alt="VibeCaster Logo"
-              width={100}
-              height={100}
-              className="rounded-lg"
-            />
+            <Link href="/" className="cursor-pointer hover:opacity-80 transition-opacity">
+              <Image
+                src="/vibecaster-logo.png"
+                alt="VibeCaster Logo"
+                width={100}
+                height={100}
+                className="rounded-lg"
+              />
+            </Link>
           </div>
 
           {/* Social Links */}

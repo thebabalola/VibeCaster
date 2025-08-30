@@ -148,9 +148,7 @@ export default function RoastMe() {
       const mockRoasts = [
         "🔥 Oh snap! This selfie is giving major 'I just discovered filters' energy! 😂",
         "💀 Look who's trying to be Instagram famous! The camera angle says 'I'm artsy' but the expression says 'I'm confused' 😅",
-        "🎭 This is giving 'I practiced this pose for 3 hours' vibes! The dedication is real, the result is... well, let's just say it's memorable! 😆",
-        "🌟 Someone's been watching too many TikTok tutorials! The confidence is there, but the execution needs work! 😂",
-        "🎪 This selfie is a whole mood! It's like you're saying 'I'm here, I'm fabulous, and I have no idea what I'm doing' 😄"
+        "🎭 This is giving 'I practiced this pose for 3 hours' vibes! The dedication is real, the result is... well, let's just say it's memorable! 😆"
       ];
       const randomRoast = mockRoasts[Math.floor(Math.random() * mockRoasts.length)];
       setRoastResult(randomRoast);

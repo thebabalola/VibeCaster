@@ -3,6 +3,7 @@
 import { useAccount } from "wagmi";
 import ConnectButton from "./ConnectButton";
 import Image from "next/image";
+import Link from "next/link";
 
 export default function Header() {
   const { address, isConnected } = useAccount();
@@ -21,14 +22,16 @@ export default function Header() {
         <div className="flex items-center justify-between">
           {/* Logo */}
           <div className="flex items-center space-x-3">
-            <Image
-              src="/vibecaster-logo.png"
-              alt="VibeCaster Logo"
-              width={150}
-              height={150}
-              className="rounded-lg"
-            />
-      </div>
+            <Link href="/" className="cursor-pointer hover:opacity-80 transition-opacity">
+              <Image
+                src="/vibecaster-logo.png"
+                alt="VibeCaster Logo"
+                width={150}
+                height={150}
+                className="rounded-lg"
+              />
+            </Link>
+          </div>
 
           {/* Desktop Navigation - Only Admin */}
           <nav className="hidden md:flex items-center space-x-6">

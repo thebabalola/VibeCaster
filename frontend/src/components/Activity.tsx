@@ -1,20 +1,175 @@
 "use client";
 
-import React, { useState } from 'react';
-import { FaFire, FaSnowflake, FaBolt, FaSync, FaTrophy } from 'react-icons/fa';
+import React, { useState, useEffect } from 'react';
+import { useAccount, useReadContract, useWaitForTransactionReceipt } from 'wagmi';
+import { FaFire, FaSnowflake, FaBolt, FaSync, FaTrophy, FaMedal, FaCrown, FaStar } from 'react-icons/fa';
 import { HiSparkles } from 'react-icons/hi';
+import VibeCasterPointsArtifact from '../abis/VibeCasterPoints.json';
+import VibeCasterBadgesArtifact from '../abis/VibeCasterBadges.json';
+import RoastMeContractArtifact from '../abis/RoastMeContract.json';
+import IcebreakerContractArtifact from '../abis/IcebreakerContract.json';
+import ChainReactionContractArtifact from '../abis/ChainReactionContract.json';
 
-export default function Activity() {
+const VibeCasterPointsABI = VibeCasterPointsArtifact.abi;
+const VibeCasterBadgesABI = VibeCasterBadgesArtifact.abi;
+const RoastMeContractABI = RoastMeContractArtifact.abi;
+const IcebreakerContractABI = IcebreakerContractArtifact.abi;
+const ChainReactionContractABI = ChainReactionContractArtifact.abi;
+
+// Contract addresses
+const VIBECASTER_POINTS_ADDRESS = "0xEe832dc966BC8D66742aA0c01bC7797116839634";
+const VIBECASTER_BADGES_ADDRESS = "0x5820440e686A5519ca5Eb1c6148C54d77DE23115";
+const ROAST_ME_CONTRACT_ADDRESS = "0x15978cDBe7cc4238825647b1A61d6efA9371D5C0";
+const ICEBREAKER_CONTRACT_ADDRESS = "0x7CecE53Ea570457C885fE09C39E82D1cD8A0da6B";
+const CHAIN_REACTION_CONTRACT_ADDRESS = "0x3A8F031e2A4040E8D599b8dbAB09B4f6251a07B9";
+
+interface ActivityProps {
+  setActiveTab: (tab: string) => void;
+}
+
+export default function Activity({ setActiveTab }: ActivityProps) {
+  const { address, isConnected } = useAccount();
   const [activityFilter, setActivityFilter] = useState("all");
+  const [userPoints, setUserPoints] = useState<number>(0);
+  const [userBadges, setUserBadges] = useState<number[]>([]);
+  const [totalRoasts, setTotalRoasts] = useState<number>(0);
+  const [totalChainReactions, setTotalChainReactions] = useState<number>(0);
+  const [totalIcebreakers, setTotalIcebreakers] = useState<number>(0);
+  const [isLoading, setIsLoading] = useState(true);
 
-  // Mock data for now - will be replaced with actual contract calls
-  const userPoints = 156;
-  const userLevel = "Vibe Master";
-  const recentActivities = [
-    { type: "roast", title: "Got roasted by AI", points: "+10", timestamp: "2h ago" },
-    { type: "icebreaker", title: "Answered icebreaker", points: "+5", timestamp: "4h ago" },
-    { type: "chain", title: "Started viral chain", points: "+20", timestamp: "1d ago" },
-  ];
+  // Contract read functions
+  const { data: pointsData } = useReadContract({
+    address: VIBECASTER_POINTS_ADDRESS,
+    abi: VibeCasterPointsABI,
+    functionName: "userPoints",
+    args: address ? [address] : undefined,
+  });
+
+  const { data: totalRoastsData } = useReadContract({
+    address: ROAST_ME_CONTRACT_ADDRESS,
+    abi: RoastMeContractABI,
+    functionName: "totalRoasts",
+  });
+
+  const { data: totalChainReactionsData } = useReadContract({
+    address: CHAIN_REACTION_CONTRACT_ADDRESS,
+    abi: ChainReactionContractABI,
+    functionName: "totalChains",
+  });
+
+  const { data: totalIcebreakersData } = useReadContract({
+    address: ICEBREAKER_CONTRACT_ADDRESS,
+    abi: IcebreakerContractABI,
+    functionName: "totalPrompts",
+  });
+
+  const { data: userBadgesData } = useReadContract({
+    address: VIBECASTER_BADGES_ADDRESS,
+    abi: VibeCasterBadgesABI,
+    functionName: "getUserBadges",
+    args: address ? [address] : undefined,
+  });
+
+  // Update data when contract data changes
+  useEffect(() => {
+    if (pointsData !== undefined) {
+      setUserPoints(Number(pointsData));
+    }
+  }, [pointsData]);
+
+  useEffect(() => {
+    if (totalRoastsData !== undefined) {
+      setTotalRoasts(Number(totalRoastsData));
+    }
+  }, [totalRoastsData]);
+
+  useEffect(() => {
+    if (totalChainReactionsData !== undefined) {
+      setTotalChainReactions(Number(totalChainReactionsData));
+    }
+  }, [totalChainReactionsData]);
+
+  useEffect(() => {
+    if (totalIcebreakersData !== undefined) {
+      setTotalIcebreakers(Number(totalIcebreakersData));
+    }
+  }, [totalIcebreakersData]);
+
+  useEffect(() => {
+    if (userBadgesData && Array.isArray(userBadgesData)) {
+      setUserBadges(userBadgesData.map(badge => Number(badge)));
+    }
+  }, [userBadgesData]);
+
+  // Calculate user level based on points
+  const getUserLevel = (points: number) => {
+    if (points >= 1000) return "Vibe Master";
+    if (points >= 500) return "Vibe Legend";
+    if (points >= 200) return "Vibe Pro";
+    if (points >= 50) return "Vibe Enthusiast";
+    return "Vibe Newbie";
+  };
+
+  const userLevel = getUserLevel(userPoints);
+
+  // Dynamic recent activities based on user's actual activity
+  const generateRecentActivities = () => {
+    const activities = [];
+    
+    // Add roast activity if user has roasts
+    if (totalRoasts > 0) {
+      activities.push({
+        type: "roast",
+        title: `Submitted ${totalRoasts} roast${totalRoasts > 1 ? 's' : ''}`,
+        points: `+${totalRoasts * 10}`,
+        timestamp: "Recently"
+      });
+    }
+    
+    // Add chain reaction activity if user has chains
+    if (totalChainReactions > 0) {
+      activities.push({
+        type: "chain",
+        title: `Started ${totalChainReactions} chain reaction${totalChainReactions > 1 ? 's' : ''}`,
+        points: `+${totalChainReactions * 20}`,
+        timestamp: "Recently"
+      });
+    }
+    
+    // Add icebreaker activity if user has icebreakers
+    if (totalIcebreakers > 0) {
+      activities.push({
+        type: "icebreaker",
+        title: `Answered ${totalIcebreakers} icebreaker${totalIcebreakers > 1 ? 's' : ''}`,
+        points: `+${totalIcebreakers * 5}`,
+        timestamp: "Recently"
+      });
+    }
+    
+    // Add points earned activity
+    if (userPoints > 0) {
+      activities.push({
+        type: "points",
+        title: `Earned ${userPoints} total points`,
+        points: `+${userPoints}`,
+        timestamp: "Total"
+      });
+    }
+    
+    // If no activities, show default message
+    if (activities.length === 0) {
+      activities.push({
+        type: "welcome",
+        title: "Welcome to VibeCaster!",
+        points: "Start earning",
+        timestamp: "Now"
+      });
+    }
+    
+    return activities;
+  };
+
+  const recentActivities = generateRecentActivities();
 
   // Mock gallery data
   const roastGalleryItems = [
@@ -68,27 +223,30 @@ export default function Activity() {
             <div className="bg-vibecaster-dark/50 backdrop-blur-sm rounded-lg border border-vibecaster-lavender/20 mb-6">
               <div className="grid grid-cols-2 md:grid-cols-4">
                 <div className="p-3 text-center border-r border-vibecaster-lavender/20 last:border-r-0">
-                  <div className="text-xl font-bold text-vibecaster-lavender">42</div>
+                  <div className="text-xl font-bold text-vibecaster-lavender">{totalRoasts}</div>
                   <div className="text-xs text-vibecaster-light-purple">Total Roasts</div>
                 </div>
                 <div className="p-3 text-center border-r border-vibecaster-lavender/20 last:border-r-0">
-                  <div className="text-xl font-bold text-vibecaster-lavender">156</div>
+                  <div className="text-xl font-bold text-vibecaster-lavender">{totalChainReactions}</div>
                   <div className="text-xs text-vibecaster-light-purple">Chain Reactions</div>
                 </div>
                 <div className="p-3 text-center border-r border-vibecaster-lavender/20 last:border-r-0">
-                  <div className="text-xl font-bold text-vibecaster-lavender">89</div>
+                  <div className="text-xl font-bold text-vibecaster-lavender">{totalIcebreakers}</div>
                   <div className="text-xs text-vibecaster-light-purple">Icebreakers</div>
                 </div>
                 <div className="p-3 text-center border-r border-vibecaster-lavender/20 last:border-r-0">
-                  <div className="text-xl font-bold text-vibecaster-lavender">#12</div>
-                  <div className="text-xs text-vibecaster-light-purple">Leaderboard Rank</div>
+                  <div className="text-xl font-bold text-vibecaster-lavender">{userBadges.length}</div>
+                  <div className="text-xs text-vibecaster-light-purple">Badges Earned</div>
                 </div>
               </div>
             </div>
 
             <div className="flex items-center justify-between mb-4">
               <h2 className="text-xl font-bold text-white">Recent Activity</h2>
-              <button className="text-vibecaster-lavender hover:text-vibecaster-light-purple transition-colors text-sm">
+              <button 
+                onClick={() => setActiveTab('leaderboard')}
+                className="text-vibecaster-lavender hover:text-vibecaster-light-purple transition-colors text-sm"
+              >
                 View Leaderboard
               </button>
             </div>
@@ -125,6 +283,16 @@ export default function Activity() {
               >
                 Chains
               </button>
+              <button
+                onClick={() => setActivityFilter("points")}
+                className={`px-3 py-1 rounded text-sm transition-colors ${
+                  activityFilter === "points"
+                    ? "bg-vibecaster-lavender text-vibecaster-dark"
+                    : "text-white hover:bg-vibecaster-lavender/20"
+                }`}
+              >
+                Points
+              </button>
             </div>
 
             {/* Activity List */}
@@ -138,6 +306,8 @@ export default function Activity() {
                         {activity.type === "roast" && <FaFire size={14} className="text-red-400" />}
                         {activity.type === "icebreaker" && <FaSnowflake size={14} className="text-blue-400" />}
                         {activity.type === "chain" && <FaBolt size={14} className="text-yellow-400" />}
+                        {activity.type === "points" && <FaTrophy size={14} className="text-yellow-400" />}
+                        {activity.type === "welcome" && <HiSparkles size={14} className="text-vibecaster-lavender" />}
                       </div>
                       <div>
                         <div className="text-white font-medium">{activity.title}</div>
@@ -198,8 +368,85 @@ export default function Activity() {
         </div>
       </div>
 
+      {/* Badges Section */}
+      <div className="mt-8">
+        <div className="bg-vibecaster-dark/30 backdrop-blur-sm rounded-lg p-6 border border-vibecaster-lavender/20">
+          <div className="flex items-center justify-between mb-6">
+            <h2 className="text-xl font-bold text-white">Your Badges</h2>
+            <div className="text-sm text-vibecaster-light-purple">
+              {userBadges.length} of 6 badges earned
+            </div>
+          </div>
+          
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
+            {/* First Activity Badge */}
+            <div className={`text-center p-4 rounded-lg border transition-all ${
+              userBadges.length > 0 
+                ? 'bg-vibecaster-lavender/20 border-vibecaster-lavender text-white' 
+                : 'bg-vibecaster-dark/50 border-vibecaster-lavender/20 text-vibecaster-lavender/50'
+            }`}>
+              <FaStar size={24} className="mx-auto mb-2" />
+              <div className="text-xs font-medium">First Activity</div>
+              <div className="text-xs text-vibecaster-light-purple">Complete 1 activity</div>
+            </div>
 
+            {/* Login Streak Badge */}
+            <div className={`text-center p-4 rounded-lg border transition-all ${
+              userBadges.length > 1 
+                ? 'bg-vibecaster-lavender/20 border-vibecaster-lavender text-white' 
+                : 'bg-vibecaster-dark/50 border-vibecaster-lavender/20 text-vibecaster-lavender/50'
+            }`}>
+              <FaCrown size={24} className="mx-auto mb-2" />
+              <div className="text-xs font-medium">Login Streak</div>
+              <div className="text-xs text-vibecaster-light-purple">7 day streak</div>
+            </div>
 
+            {/* Activity Streak Badge */}
+            <div className={`text-center p-4 rounded-lg border transition-all ${
+              userBadges.length > 2 
+                ? 'bg-vibecaster-lavender/20 border-vibecaster-lavender text-white' 
+                : 'bg-vibecaster-dark/50 border-vibecaster-lavender/20 text-vibecaster-lavender/50'
+            }`}>
+              <FaMedal size={24} className="mx-auto mb-2" />
+              <div className="text-xs font-medium">Activity Streak</div>
+              <div className="text-xs text-vibecaster-light-purple">5 day activity</div>
+            </div>
+
+            {/* Top Roaster Badge */}
+            <div className={`text-center p-4 rounded-lg border transition-all ${
+              userBadges.length > 3 
+                ? 'bg-vibecaster-lavender/20 border-vibecaster-lavender text-white' 
+                : 'bg-vibecaster-dark/50 border-vibecaster-lavender/20 text-vibecaster-lavender/50'
+            }`}>
+              <FaFire size={24} className="mx-auto mb-2" />
+              <div className="text-xs font-medium">Top Roaster</div>
+              <div className="text-xs text-vibecaster-light-purple">10 roasts</div>
+            </div>
+
+            {/* Chain Master Badge */}
+            <div className={`text-center p-4 rounded-lg border transition-all ${
+              userBadges.length > 4 
+                ? 'bg-vibecaster-lavender/20 border-vibecaster-lavender text-white' 
+                : 'bg-vibecaster-dark/50 border-vibecaster-lavender/20 text-vibecaster-lavender/50'
+            }`}>
+              <FaBolt size={24} className="mx-auto mb-2" />
+              <div className="text-xs font-medium">Chain Master</div>
+              <div className="text-xs text-vibecaster-light-purple">5 chains</div>
+            </div>
+
+            {/* Icebreaker Badge */}
+            <div className={`text-center p-4 rounded-lg border transition-all ${
+              userBadges.length > 5 
+                ? 'bg-vibecaster-lavender/20 border-vibecaster-lavender text-white' 
+                : 'bg-vibecaster-dark/50 border-vibecaster-lavender/20 text-vibecaster-lavender/50'
+            }`}>
+              <FaSnowflake size={24} className="mx-auto mb-2" />
+              <div className="text-xs font-medium">Icebreaker</div>
+              <div className="text-xs text-vibecaster-light-purple">10 responses</div>
+            </div>
+          </div>
+        </div>
+      </div>
 
     </div>
   );

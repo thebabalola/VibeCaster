@@ -37,10 +37,14 @@ export default function VibeCasterDashboard() {
   return (
     <div className="min-h-screen">
       {/* Welcome Section */}
-      <div className="text-center py-12 px-4">
+      <div className="text-center py-14 px-4 mt-6 mb-10">
         <div className="text-4xl mb-4 animate-bounce">{currentEmoji}</div>
         <h1 className="text-4xl font-bold mb-4">
-          <span className="text-vibecaster-lavender">GM VibeCaster fam!</span> 🚀
+          <span className="text-white">GM </span>
+          <span style={{ color: '#5F4091' }}>Vi</span>
+          <span style={{ color: '#D14C77' }}>be</span>
+          <span className="text-white">Caster</span>
+          <span className="text-white"> fam!</span> 🚀
         </h1>
         <p className="text-xl text-vibecaster-light-purple mb-6">
           Another day to roast, create & vibe! Let's make some magic happen
@@ -87,7 +91,7 @@ export default function VibeCasterDashboard() {
       <div className="px-4 pb-8">
         {activeTab === 'activity' && (
           <div className="max-w-6xl mx-auto">
-            <Activity />
+            <Activity setActiveTab={setActiveTab} />
           </div>
         )}
 
