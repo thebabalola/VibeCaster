@@ -1,0 +1,11 @@
+{
+  "VibeCasterPoints": "0xEe832dc966BC8D66742aA0c01bC7797116839634",
+  "VibeCasterBadges": "0x5820440e686A5519ca5Eb1c6148C54d77DE23115",
+  "RoastMeContract": "0x15978cDBe7cc4238825647b1A61d6efA9371D5C0",
+  "IcebreakerContract": "0x7CecE53Ea570457C885fE09C39E82D1cD8A0da6B",
+  "ChainReactionContract": "0x3A8F031e2A4040E8D599b8dbAB09B4f6251a07B9",
+  "VibeCasterAdmin": "0xfB462A2f915d45BE8292B8e81ca4bbe7d1072b50",
+  "deployer": "0x0eE1F2b663547dAa487F57C517C7563AdCf86da0",
+  "network": "base-sepolia",
+  "timestamp": "2025-08-30T01:03:03.557Z"
+}

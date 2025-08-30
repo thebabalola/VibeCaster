@@ -1,0 +1,100 @@
+/* app/globals.css */
+
+@import "tailwindcss";
+@import url('https://fonts.googleapis.com/css2?family=DM+Mono:wght@400&display=swap');
+
+/* 
+  STEP 1: Define VibeCaster color palette using CSS variables.
+*/
+:root {
+  /* VibeCaster Brand Colors */
+  --vibecaster-dark: #0C0420;
+  --vibecaster-purple-dark: #5D3C64;
+  --vibecaster-purple-medium: #7B466A;
+  --vibecaster-lavender: #9F6496;
+  --vibecaster-pink-light: #D391B0;
+  --vibecaster-pink-dark: #BA6E8F;
+  
+  /* Legacy MintMyMood colors (commented for reference) */
+  /* --primary: #FF6B6B;
+  --secondary: #FFD93D;
+  --success: #6BCB77;
+  --bgLight: #F7F8FC;
+  --textDark: #222222;
+  --textMuted: #666666; */
+
+  /* VibeCaster theme colors */
+  --background: var(--vibecaster-dark);
+  --foreground: #ffffff;
+  --card-bg: rgba(93, 60, 100, 0.1);
+  --card-border: rgba(159, 100, 150, 0.2);
+}
+
+/* 
+  STEP 2: Register VibeCaster variables with Tailwind's theme.
+*/
+@theme {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+
+  /* VibeCaster color mapping */
+  --color-vibecaster-dark: var(--vibecaster-dark);
+  --color-vibecaster-purple-dark: var(--vibecaster-purple-dark);
+  --color-vibecaster-purple-medium: var(--vibecaster-purple-medium);
+  --color-vibecaster-lavender: var(--vibecaster-lavender);
+  --color-vibecaster-pink-light: var(--vibecaster-pink-light);
+  --color-vibecaster-pink-dark: var(--vibecaster-pink-dark);
+
+  /* Legacy colors (commented for reference) */
+  /* --color-primary: var(--primary);
+  --color-secondary: var(--secondary);
+  --color-success: var(--success);
+  --color-bgLight: var(--bgLight);
+  --color-textDark: var(--textDark);
+  --color-textMuted: var(--textMuted); */
+
+  /* Font configuration */
+  --font-sans: 'DM Mono', monospace;
+  --font-mono: 'DM Mono', monospace;
+}
+
+/* 
+  STEP 3: Global styles for VibeCaster
+*/
+body {
+  font-family: 'DM Mono', monospace;
+  background: linear-gradient(180deg, #0C0420 0%, #5D3C64 100%);
+  min-height: 100vh;
+  color: #ffffff;
+}
+
+/* VibeCaster gradient background */
+.vibecaster-bg {
+  background: linear-gradient(180deg, #0C0420 0%, #5D3C64 100%);
+}
+
+/* Card styles for VibeCaster */
+.vibecaster-card {
+  background: rgba(93, 60, 100, 0.1);
+  border: 1px solid rgba(159, 100, 150, 0.2);
+  backdrop-filter: blur(10px);
+  border-radius: 12px;
+}
+
+/* Glass morphism effect */
+.glass-effect {
+  background: rgba(159, 100, 150, 0.05);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(159, 100, 150, 0.1);
+}
+
+/* Responsive NFT Gallery Grid (keeping for reference) */
+.nft-gallery-grid {
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+}
+
+@media (min-width: 640px) {
+  .nft-gallery-grid {
+    grid-template-columns: repeat(auto-fit, minmax(211px, 1fr));
+  }
+}
