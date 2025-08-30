@@ -7,9 +7,9 @@ export default function Footer() {
   return (
     <footer className="bg-gradient-to-r from-vibecaster-dark to-vibecaster-purple-dark border-t border-vibecaster-lavender/20 mt-auto">
       <div className="container mx-auto px-4 py-6">
-        <div className="flex flex-col md:flex-row items-center justify-between">
+        <div className="flex flex-row items-center justify-between">
           {/* VibeCaster Brand */}
-          <div className="flex items-center space-x-3 mb-4 md:mb-0">
+          <div className="flex items-center space-x-3">
             <Link href="/" className="cursor-pointer hover:opacity-80 transition-opacity">
               <Image
                 src="/vibecaster-logo.png"

@@ -323,14 +323,8 @@ const WalletModal = () => {
 
       {isModalOpen && (
         <>
-          {/* Backdrop for mobile */}
-          <div
-            className="fixed inset-0 bg-black/50 backdrop-blur-sm z-40 md:hidden"
-            onClick={() => setIsModalOpen(false)}
-          />
-
           {/* Modal */}
-          <div className="fixed inset-0 z-50 flex items-center justify-center p-4 md:absolute md:inset-auto md:right-0 md:top-full md:mt-2 md:w-80 md:origin-top-right md:rounded-xl md:border md:border-gray-200 md:bg-white md:p-4 md:shadow-lg">
+          <div className="absolute right-0 top-full mt-2 z-50 w-80 origin-top-right rounded-xl border border-gray-200 bg-white p-4 shadow-lg">
             <div className="w-full max-w-sm rounded-xl border border-gray-200 bg-white p-4 shadow-lg md:max-w-none md:border-none md:shadow-none md:p-0">
               <div className="flex items-center justify-between mb-4">
                 <h3 className="text-lg font-bold text-[#222222]">Connect a Wallet</h3>

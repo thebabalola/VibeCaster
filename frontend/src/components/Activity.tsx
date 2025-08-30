@@ -185,32 +185,32 @@ export default function Activity({ setActiveTab }: ActivityProps) {
   ];
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-6 overflow-x-hidden">
       {/* Header */}
       <div className="text-center">
-        <h2 className="text-3xl font-bold text-vibecaster-lavender mb-2">Activity Dashboard</h2>
-        <p className="text-vibecaster-light-purple">Track your VibeCaster journey and achievements</p>
+        <h2 className="text-xl md:text-2xl lg:text-3xl font-bold text-vibecaster-lavender mb-2">Activity Dashboard</h2>
+        <p className="text-sm md:text-base text-vibecaster-light-purple">Track your VibeCaster journey and achievements</p>
       </div>
 
       {/* Main Activity Grid */}
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 md:gap-6">
         {/* Points Card */}
         <div className="lg:col-span-1">
-          <div className="bg-vibecaster-dark/30 backdrop-blur-sm rounded-lg p-6 border border-vibecaster-lavender/20">
-            <div className="flex items-center justify-between mb-4">
-              <h2 className="text-xl font-bold text-white">On-chain Points</h2>
+          <div className="bg-vibecaster-dark/30 backdrop-blur-sm rounded-lg p-4 md:p-6 border border-vibecaster-lavender/20">
+            <div className="flex items-center justify-between mb-3 md:mb-4">
+              <h2 className="text-lg md:text-xl font-bold text-white">On-chain Points</h2>
               <button className="text-vibecaster-lavender hover:text-vibecaster-light-purple transition-colors">
-                <FaSync size={16} />
+                <FaSync size={14} className="md:w-4 md:h-4" />
               </button>
             </div>
             <div className="flex items-center justify-between">
               <div>
-                <div className="text-3xl font-bold text-vibecaster-lavender">{userPoints}</div>
-                <div className="text-sm text-vibecaster-light-purple">Total Points</div>
+                <div className="text-2xl md:text-3xl font-bold text-vibecaster-lavender">{userPoints}</div>
+                <div className="text-xs md:text-sm text-vibecaster-light-purple">Total Points</div>
               </div>
               <div className="text-right">
-                <div className="text-lg font-bold text-vibecaster-light-purple">{userLevel}</div>
-                <div className="text-sm text-vibecaster-light-purple">Level</div>
+                <div className="text-base md:text-lg font-bold text-vibecaster-light-purple">{userLevel}</div>
+                <div className="text-xs md:text-sm text-vibecaster-light-purple">Level</div>
               </div>
             </div>
           </div>
@@ -218,44 +218,44 @@ export default function Activity({ setActiveTab }: ActivityProps) {
 
         {/* Recent Activity */}
         <div className="lg:col-span-2">
-          <div className="bg-vibecaster-dark/30 backdrop-blur-sm rounded-lg p-6 border border-vibecaster-lavender/20">
+          <div className="bg-vibecaster-dark/30 backdrop-blur-sm rounded-lg p-4 md:p-6 border border-vibecaster-lavender/20">
             {/* Quick Stats - Inside the Recent Activity container, above the header */}
-            <div className="bg-vibecaster-dark/50 backdrop-blur-sm rounded-lg border border-vibecaster-lavender/20 mb-6">
+            <div className="bg-vibecaster-dark/50 backdrop-blur-sm rounded-lg border border-vibecaster-lavender/20 mb-4 md:mb-6">
               <div className="grid grid-cols-2 md:grid-cols-4">
-                <div className="p-3 text-center border-r border-vibecaster-lavender/20 last:border-r-0">
-                  <div className="text-xl font-bold text-vibecaster-lavender">{totalRoasts}</div>
+                <div className="p-2 md:p-3 text-center border-r border-vibecaster-lavender/20 last:border-r-0">
+                  <div className="text-lg md:text-xl font-bold text-vibecaster-lavender">{totalRoasts}</div>
                   <div className="text-xs text-vibecaster-light-purple">Total Roasts</div>
                 </div>
-                <div className="p-3 text-center border-r border-vibecaster-lavender/20 last:border-r-0">
-                  <div className="text-xl font-bold text-vibecaster-lavender">{totalChainReactions}</div>
+                <div className="p-2 md:p-3 text-center border-r border-vibecaster-lavender/20 last:border-r-0">
+                  <div className="text-lg md:text-xl font-bold text-vibecaster-lavender">{totalChainReactions}</div>
                   <div className="text-xs text-vibecaster-light-purple">Chain Reactions</div>
                 </div>
-                <div className="p-3 text-center border-r border-vibecaster-lavender/20 last:border-r-0">
-                  <div className="text-xl font-bold text-vibecaster-lavender">{totalIcebreakers}</div>
+                <div className="p-2 md:p-3 text-center border-r border-vibecaster-lavender/20 last:border-r-0">
+                  <div className="text-lg md:text-xl font-bold text-vibecaster-lavender">{totalIcebreakers}</div>
                   <div className="text-xs text-vibecaster-light-purple">Icebreakers</div>
                 </div>
-                <div className="p-3 text-center border-r border-vibecaster-lavender/20 last:border-r-0">
-                  <div className="text-xl font-bold text-vibecaster-lavender">{userBadges.length}</div>
+                <div className="p-2 md:p-3 text-center border-r border-vibecaster-lavender/20 last:border-r-0">
+                  <div className="text-lg md:text-xl font-bold text-vibecaster-lavender">{userBadges.length}</div>
                   <div className="text-xs text-vibecaster-light-purple">Badges Earned</div>
                 </div>
               </div>
             </div>
 
-            <div className="flex items-center justify-between mb-4">
-              <h2 className="text-xl font-bold text-white">Recent Activity</h2>
+            <div className="mb-3 md:mb-4">
+              <h2 className="text-lg md:text-xl font-bold text-white mb-2">Recent Activity</h2>
               <button 
                 onClick={() => setActiveTab('leaderboard')}
-                className="text-vibecaster-lavender hover:text-vibecaster-light-purple transition-colors text-sm"
+                className="text-vibecaster-lavender hover:text-vibecaster-light-purple transition-colors text-xs md:text-sm"
               >
                 View Leaderboard
               </button>
             </div>
 
             {/* Activity Filters */}
-            <div className="flex gap-2 mb-4">
+            <div className="flex flex-wrap gap-1 md:gap-2 mb-3 md:mb-4">
               <button
                 onClick={() => setActivityFilter("all")}
-                className={`px-3 py-1 rounded text-sm transition-colors ${
+                className={`px-2 md:px-3 py-1 rounded text-xs md:text-sm transition-colors ${
                   activityFilter === "all"
                     ? "bg-vibecaster-lavender text-vibecaster-dark"
                     : "text-white hover:bg-vibecaster-lavender/20"
@@ -265,7 +265,7 @@ export default function Activity({ setActiveTab }: ActivityProps) {
               </button>
               <button
                 onClick={() => setActivityFilter("roast")}
-                className={`px-3 py-1 rounded text-sm transition-colors ${
+                className={`px-2 md:px-3 py-1 rounded text-xs md:text-sm transition-colors ${
                   activityFilter === "roast"
                     ? "bg-vibecaster-lavender text-vibecaster-dark"
                     : "text-white hover:bg-vibecaster-lavender/20"
@@ -275,7 +275,7 @@ export default function Activity({ setActiveTab }: ActivityProps) {
               </button>
               <button
                 onClick={() => setActivityFilter("chain")}
-                className={`px-3 py-1 rounded text-sm transition-colors ${
+                className={`px-2 md:px-3 py-1 rounded text-xs md:text-sm transition-colors ${
                   activityFilter === "chain"
                     ? "bg-vibecaster-lavender text-vibecaster-dark"
                     : "text-white hover:bg-vibecaster-lavender/20"
@@ -285,7 +285,7 @@ export default function Activity({ setActiveTab }: ActivityProps) {
               </button>
               <button
                 onClick={() => setActivityFilter("points")}
-                className={`px-3 py-1 rounded text-sm transition-colors ${
+                className={`px-2 md:px-3 py-1 rounded text-xs md:text-sm transition-colors ${
                   activityFilter === "points"
                     ? "bg-vibecaster-lavender text-vibecaster-dark"
                     : "text-white hover:bg-vibecaster-lavender/20"
@@ -296,42 +296,42 @@ export default function Activity({ setActiveTab }: ActivityProps) {
             </div>
 
             {/* Activity List */}
-            <div className="space-y-3">
+            <div className="space-y-2 md:space-y-3">
               {recentActivities
                 .filter(activity => activityFilter === "all" || activity.type === activityFilter)
                 .map((activity, index) => (
-                  <div key={index} className="flex items-center justify-between p-3 rounded-lg bg-vibecaster-dark/50 border border-vibecaster-lavender/20">
-                    <div className="flex items-center gap-3">
-                      <div className="w-8 h-8 rounded-full bg-vibecaster-lavender/20 flex items-center justify-center">
-                        {activity.type === "roast" && <FaFire size={14} className="text-red-400" />}
-                        {activity.type === "icebreaker" && <FaSnowflake size={14} className="text-blue-400" />}
-                        {activity.type === "chain" && <FaBolt size={14} className="text-yellow-400" />}
-                        {activity.type === "points" && <FaTrophy size={14} className="text-yellow-400" />}
-                        {activity.type === "welcome" && <HiSparkles size={14} className="text-vibecaster-lavender" />}
+                  <div key={index} className="flex items-center justify-between p-2 md:p-3 rounded-lg bg-vibecaster-dark/50 border border-vibecaster-lavender/20">
+                    <div className="flex items-center gap-2 md:gap-3">
+                      <div className="w-6 h-6 md:w-8 md:h-8 rounded-full bg-vibecaster-lavender/20 flex items-center justify-center">
+                        {activity.type === "roast" && <FaFire size={12} className="md:w-3.5 md:h-3.5 text-red-400" />}
+                        {activity.type === "icebreaker" && <FaSnowflake size={12} className="md:w-3.5 md:h-3.5 text-blue-400" />}
+                        {activity.type === "chain" && <FaBolt size={12} className="md:w-3.5 md:h-3.5 text-yellow-400" />}
+                        {activity.type === "points" && <FaTrophy size={12} className="md:w-3.5 md:h-3.5 text-yellow-400" />}
+                        {activity.type === "welcome" && <HiSparkles size={12} className="md:w-3.5 md:h-3.5 text-vibecaster-lavender" />}
                       </div>
                       <div>
-                        <div className="text-white font-medium">{activity.title}</div>
+                        <div className="text-sm md:text-base text-white font-medium">{activity.title}</div>
                         <div className="text-xs text-vibecaster-light-purple">{activity.timestamp}</div>
                       </div>
                     </div>
-                    <div className="text-vibecaster-lavender font-bold">{activity.points}</div>
+                    <div className="text-sm md:text-base text-vibecaster-lavender font-bold">{activity.points}</div>
                   </div>
                 ))}
             </div>
 
             {/* Roast Gallery - Show only when roast filter is active */}
             {activityFilter === "roast" && (
-              <div className="mt-6">
-                <h4 className="text-lg font-semibold text-vibecaster-lavender mb-4">Recent Roasts</h4>
-                <div className="space-y-3">
+              <div className="mt-4 md:mt-6">
+                <h4 className="text-base md:text-lg font-semibold text-vibecaster-lavender mb-3 md:mb-4">Recent Roasts</h4>
+                <div className="space-y-2 md:space-y-3">
                   {roastGalleryItems.map((item) => (
-                    <div key={item.id} className="flex items-center gap-3 p-3 rounded-lg bg-vibecaster-dark/50 border border-vibecaster-lavender/20">
-                      <div className="w-12 h-12 rounded-lg bg-vibecaster-lavender/20 flex items-center justify-center">
-                        <FaFire size={20} className="text-red-400" />
+                    <div key={item.id} className="flex items-center gap-2 md:gap-3 p-2 md:p-3 rounded-lg bg-vibecaster-dark/50 border border-vibecaster-lavender/20">
+                      <div className="w-8 h-8 md:w-12 md:h-12 rounded-lg bg-vibecaster-lavender/20 flex items-center justify-center">
+                        <FaFire size={16} className="md:w-5 md:h-5 text-red-400" />
                       </div>
                       <div className="flex-1">
-                        <h4 className="text-white font-medium">{item.title}</h4>
-                        <div className="flex items-center gap-4 text-xs text-vibecaster-light-purple">
+                        <h4 className="text-sm md:text-base text-white font-medium">{item.title}</h4>
+                        <div className="flex items-center gap-2 md:gap-4 text-xs text-vibecaster-light-purple">
                           <span>{item.likes} likes</span>
                           <span>{item.timestamp}</span>
                         </div>
@@ -344,17 +344,17 @@ export default function Activity({ setActiveTab }: ActivityProps) {
 
             {/* Chain Gallery - Show only when chain filter is active */}
             {activityFilter === "chain" && (
-              <div className="mt-6">
-                <h4 className="text-lg font-semibold text-vibecaster-lavender mb-4">Chain Reactions</h4>
-                <div className="space-y-3">
+              <div className="mt-4 md:mt-6">
+                <h4 className="text-base md:text-lg font-semibold text-vibecaster-lavender mb-3 md:mb-4">Chain Reactions</h4>
+                <div className="space-y-2 md:space-y-3">
                   {chainGalleryItems.map((item) => (
-                    <div key={item.id} className="flex items-center gap-3 p-3 rounded-lg bg-vibecaster-dark/50 border border-vibecaster-lavender/20">
-                      <div className="w-12 h-12 rounded-lg bg-vibecaster-lavender/20 flex items-center justify-center">
-                        <FaBolt size={20} className="text-yellow-400" />
+                    <div key={item.id} className="flex items-center gap-2 md:gap-3 p-2 md:p-3 rounded-lg bg-vibecaster-dark/50 border border-vibecaster-lavender/20">
+                      <div className="w-8 h-8 md:w-12 md:h-12 rounded-lg bg-vibecaster-lavender/20 flex items-center justify-center">
+                        <FaBolt size={16} className="md:w-5 md:h-5 text-yellow-400" />
                       </div>
                       <div className="flex-1">
-                        <h4 className="text-white font-medium">{item.title}</h4>
-                        <div className="flex items-center gap-4 text-xs text-vibecaster-light-purple">
+                        <h4 className="text-sm md:text-base text-white font-medium">{item.title}</h4>
+                        <div className="flex items-center gap-2 md:gap-4 text-xs text-vibecaster-light-purple">
                           <span>{item.likes} likes</span>
                           <span>{item.timestamp}</span>
                         </div>
@@ -369,78 +369,78 @@ export default function Activity({ setActiveTab }: ActivityProps) {
       </div>
 
       {/* Badges Section */}
-      <div className="mt-8">
-        <div className="bg-vibecaster-dark/30 backdrop-blur-sm rounded-lg p-6 border border-vibecaster-lavender/20">
-          <div className="flex items-center justify-between mb-6">
-            <h2 className="text-xl font-bold text-white">Your Badges</h2>
-            <div className="text-sm text-vibecaster-light-purple">
+      <div className="mt-6 md:mt-8">
+        <div className="bg-vibecaster-dark/30 backdrop-blur-sm rounded-lg p-4 md:p-6 border border-vibecaster-lavender/20">
+          <div className="flex items-center justify-between mb-4 md:mb-6">
+            <h2 className="text-lg md:text-xl font-bold text-white">Your Badges</h2>
+            <div className="text-xs md:text-sm text-vibecaster-light-purple">
               {userBadges.length} of 6 badges earned
             </div>
           </div>
           
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-3 md:gap-4">
             {/* First Activity Badge */}
-            <div className={`text-center p-4 rounded-lg border transition-all ${
+            <div className={`text-center p-3 md:p-4 rounded-lg border transition-all ${
               userBadges.length > 0 
                 ? 'bg-vibecaster-lavender/20 border-vibecaster-lavender text-white' 
                 : 'bg-vibecaster-dark/50 border-vibecaster-lavender/20 text-vibecaster-lavender/50'
             }`}>
-              <FaStar size={24} className="mx-auto mb-2" />
+              <FaStar size={20} className="mx-auto mb-1 md:mb-2 md:w-6 md:h-6" />
               <div className="text-xs font-medium">First Activity</div>
               <div className="text-xs text-vibecaster-light-purple">Complete 1 activity</div>
             </div>
 
             {/* Login Streak Badge */}
-            <div className={`text-center p-4 rounded-lg border transition-all ${
+            <div className={`text-center p-3 md:p-4 rounded-lg border transition-all ${
               userBadges.length > 1 
                 ? 'bg-vibecaster-lavender/20 border-vibecaster-lavender text-white' 
                 : 'bg-vibecaster-dark/50 border-vibecaster-lavender/20 text-vibecaster-lavender/50'
             }`}>
-              <FaCrown size={24} className="mx-auto mb-2" />
+              <FaCrown size={20} className="mx-auto mb-1 md:mb-2 md:w-6 md:h-6" />
               <div className="text-xs font-medium">Login Streak</div>
               <div className="text-xs text-vibecaster-light-purple">7 day streak</div>
             </div>
 
             {/* Activity Streak Badge */}
-            <div className={`text-center p-4 rounded-lg border transition-all ${
+            <div className={`text-center p-3 md:p-4 rounded-lg border transition-all ${
               userBadges.length > 2 
                 ? 'bg-vibecaster-lavender/20 border-vibecaster-lavender text-white' 
                 : 'bg-vibecaster-dark/50 border-vibecaster-lavender/20 text-vibecaster-lavender/50'
             }`}>
-              <FaMedal size={24} className="mx-auto mb-2" />
+              <FaMedal size={20} className="mx-auto mb-1 md:mb-2 md:w-6 md:h-6" />
               <div className="text-xs font-medium">Activity Streak</div>
               <div className="text-xs text-vibecaster-light-purple">5 day activity</div>
             </div>
 
             {/* Top Roaster Badge */}
-            <div className={`text-center p-4 rounded-lg border transition-all ${
+            <div className={`text-center p-3 md:p-4 rounded-lg border transition-all ${
               userBadges.length > 3 
                 ? 'bg-vibecaster-lavender/20 border-vibecaster-lavender text-white' 
                 : 'bg-vibecaster-dark/50 border-vibecaster-lavender/20 text-vibecaster-lavender/50'
             }`}>
-              <FaFire size={24} className="mx-auto mb-2" />
+              <FaFire size={20} className="mx-auto mb-1 md:mb-2 md:w-6 md:h-6" />
               <div className="text-xs font-medium">Top Roaster</div>
               <div className="text-xs text-vibecaster-light-purple">10 roasts</div>
             </div>
 
             {/* Chain Master Badge */}
-            <div className={`text-center p-4 rounded-lg border transition-all ${
+            <div className={`text-center p-3 md:p-4 rounded-lg border transition-all ${
               userBadges.length > 4 
                 ? 'bg-vibecaster-lavender/20 border-vibecaster-lavender text-white' 
                 : 'bg-vibecaster-dark/50 border-vibecaster-lavender/20 text-vibecaster-lavender/50'
             }`}>
-              <FaBolt size={24} className="mx-auto mb-2" />
+              <FaBolt size={20} className="mx-auto mb-1 md:mb-2 md:w-6 md:h-6" />
               <div className="text-xs font-medium">Chain Master</div>
               <div className="text-xs text-vibecaster-light-purple">5 chains</div>
             </div>
 
             {/* Icebreaker Badge */}
-            <div className={`text-center p-4 rounded-lg border transition-all ${
+            <div className={`text-center p-3 md:p-4 rounded-lg border transition-all ${
               userBadges.length > 5 
                 ? 'bg-vibecaster-lavender/20 border-vibecaster-lavender text-white' 
                 : 'bg-vibecaster-dark/50 border-vibecaster-lavender/20 text-vibecaster-lavender/50'
             }`}>
-              <FaSnowflake size={24} className="mx-auto mb-2" />
+              <FaSnowflake size={20} className="mx-auto mb-1 md:mb-2 md:w-6 md:h-6" />
               <div className="text-xs font-medium">Icebreaker</div>
               <div className="text-xs text-vibecaster-light-purple">10 responses</div>
             </div>

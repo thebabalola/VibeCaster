@@ -1,23 +1,23 @@
-# MintMyMood 🌟
+# VibeCaster 🚀
 
-**Transform your daily emotions into unique NFTs and share your mood journey with friends on Base Sepolia!**
+**The Future of Social on Farcaster - AI Roasts, Icebreakers & Viral Challenges!**
 
-[![Live Demo](https://img.shields.io/badge/Live%20Demo-MintMyMood-blue?style=for-the-badge&logo=ethereum)](https://mintmymood.vercel.app)
-[![Farcaster Mini App](https://img.shields.io/badge/Farcaster%20Mini%20App-Available-purple?style=for-the-badge)](https://farcaster.xyz/miniapps/oXpRXDCzmUMJ/mintmymood)
+[![Live Demo](https://img.shields.io/badge/Live%20Demo-VibeCaster-blue?style=for-the-badge&logo=ethereum)](https://vibecaster.vercel.app)
+[![Farcaster Mini App](https://img.shields.io/badge/Farcaster%20Mini%20App-Available-purple?style=for-the-badge)](https://farcaster.xyz/miniapps/vibecaster)
 [![License](https://img.shields.io/badge/License-MIT-green.svg?style=for-the-badge)](LICENSE)
 
 ## 🎯 Overview
 
-MintMyMood is a revolutionary Web3 application that allows users to mint their daily emotions as unique NFTs on the Base Sepolia network. Built with modern web technologies and integrated with Farcaster, it provides a seamless experience for capturing, sharing, and tracking your emotional journey.
+VibeCaster is a revolutionary Farcaster mini-app that enhances social interaction and engagement within the Farcaster ecosystem. It integrates three core viral mechanics: AI-generated roasts, quirky icebreakers, and viral chain challenges. Built on Base Sepolia with a modern tech stack, VibeCaster provides a fun, interactive, and shareable experience directly within Farcaster frames.
 
 ### ✨ Key Features
 
-- **🎨 Mood Minting**: Transform your emotions into beautiful, AI-generated NFT artwork
-- **📱 Farcaster Integration**: Seamless wallet connection and sharing within the Farcaster ecosystem
-- **🏆 Achievement System**: Earn badges and track your minting streaks
-- **📊 AI-Powered Reviews**: Get personalized weekly and monthly mood analysis
-- **🖼️ Gallery**: Browse and showcase your minted moods
-- **📈 Leaderboard**: Compete with other users for top minter status
+- **🔥 AI Roast Me**: Submit selfies for hilarious AI-generated roasts
+- **🧊 Icebreaker Mode**: Answer quirky prompts and create polls
+- **⚡ Chain Reaction**: Start viral challenges and join the fun
+- **🏆 Points & Badges**: Earn points and collect achievement badges
+- **📱 Farcaster Integration**: Seamless wallet connection and sharing
+- **🎨 Modern UI**: Dark theme with VibeCaster brand colors
 - **🌐 Multi-Wallet Support**: Connect with MetaMask, WalletConnect, and more
 
 ## 🚀 Quick Start
@@ -33,8 +33,8 @@ MintMyMood is a revolutionary Web3 application that allows users to mint their d
 
 1. **Clone the repository**
    ```bash
-   git clone https://github.com/thebabalola/mintmymood.git
-   cd mintmymood/frontends-mym
+   git clone https://github.com/thebabalola/VibeCaster.git
+   cd VibeCaster/frontend
    ```
 
 2. **Install dependencies**
@@ -49,9 +49,16 @@ MintMyMood is a revolutionary Web3 application that allows users to mint their d
    
    Add your configuration:
    ```env
-   NEXT_PUBLIC_CONTRACT_ADDRESS=your_contract_address
+   NEXT_PUBLIC_VIBECASTER_ADMIN_ADDRESS=0x95f87C578aA1d3E72Ba7ee27d2d506c3CE8f8f10
+   NEXT_PUBLIC_VIBECASTER_POINTS_ADDRESS=0x95f87C578aA1d3E72Ba7ee27d2d506c3CE8f8f10
+   NEXT_PUBLIC_VIBECASTER_BADGES_ADDRESS=0x95f87C578aA1d3E72Ba7ee27d2d506c3CE8f8f10
+   NEXT_PUBLIC_ROAST_ME_ADDRESS=0x95f87C578aA1d3E72Ba7ee27d2d506c3CE8f8f10
+   NEXT_PUBLIC_ICEBREAKER_ADDRESS=0x95f87C578aA1d3E72Ba7ee27d2d506c3CE8f8f10
+   NEXT_PUBLIC_CHAIN_REACTION_ADDRESS=0x95f87C578aA1d3E72Ba7ee27d2d506c3CE8f8f10
    NEXT_PUBLIC_WALLETCONNECT_PROJECT_ID=your_walletconnect_project_id
    NEXT_PUBLIC_CDP_CLIENT_API_KEY=your_coinbase_api_key
+   NEXT_PUBLIC_HUGGING_FACE_API_KEY=your_huggingface_api_key
+   NEXT_PUBLIC_PINATA_JWT=your_pinata_jwt
    ```
 
 4. **Run the development server**
@@ -67,63 +74,87 @@ MintMyMood is a revolutionary Web3 application that allows users to mint their d
 ### Frontend Stack
 
 - **Framework**: Next.js 15 with App Router
-- **Styling**: Tailwind CSS 4
+- **Styling**: Tailwind CSS 4 with custom VibeCaster theme
 - **Web3**: Wagmi + Viem
-- **Wallet Integration**: Farcaster Mini App Connector
+- **Wallet Integration**: Farcaster Mini App Connector + Base MiniKit
 - **UI Components**: Custom components with React Icons
 - **State Management**: React hooks + TanStack Query
+- **AI Integration**: Hugging Face Inference API
+- **Storage**: IPFS via Pinata
 
-### Smart Contract
+### Smart Contracts (Base Sepolia)
 
-- **Network**: Base Sepolia testnet
-- **Language**: Solidity
-- **Framework**: Foundry
-- **Features**: ERC-721 NFTs with metadata storage
+- **VibeCasterAdmin**: Platform administration and authorization
+- **VibeCasterPoints**: Points system and user rewards
+- **VibeCasterBadges**: NFT badges and achievements
+- **RoastMeContract**: AI roast submissions and voting
+- **IcebreakerContract**: Prompts, polls, and responses
+- **ChainReactionContract**: Viral challenges and responses
 
 ### Key Components
 
 ```
 src/
 ├── app/                    # Next.js App Router pages
-│   ├── page.tsx           # Home page with mood minting
-│   ├── profile/           # User profile and achievements
-│   ├── gallery/           # NFT gallery
-│   └── leaderboard/       # Top minters leaderboard
+│   ├── page.tsx           # Main dashboard with navigation
+│   ├── admin/             # Admin dashboard (authorized users)
+│   └── api/               # API routes for contract data
 ├── components/            # Reusable React components
-│   ├── MoodForm.tsx       # Mood input and minting form
-│   ├── NFTGallery.tsx     # NFT display gallery
-│   ├── ConnectButton.tsx  # Wallet connection
+│   ├── VibeCasterDashboard.tsx  # Main dashboard component
+│   ├── RoastMe.tsx        # AI roast functionality
+│   ├── Icebreaker.tsx     # Icebreaker prompts and polls
+│   ├── ChainReactionGallery.tsx # Viral challenges
+│   ├── Activity.tsx       # User activity and stats
+│   ├── Leaderboard.tsx    # Leaderboard display
+│   ├── Header.tsx         # Navigation header
+│   ├── Footer.tsx         # Footer with social links
 │   └── ...
 ├── contexts/              # React contexts
 │   └── wallet/           # Wallet connection context
 ├── lib/                   # Utility functions and configs
 │   ├── wagmiConfig.ts    # Wagmi configuration
-│   ├── MintMyMoodABI.ts  # Smart contract ABI
+│   ├── abis/             # Smart contract ABIs
+│   ├── hugApi.ts         # AI integration
+│   ├── ipfs.ts           # IPFS upload utilities
 │   └── ...
+├── providers/             # React providers
+│   └── MiniKitProvider.tsx # Base MiniKit integration
 └── types/                 # TypeScript type definitions
 ```
 
 ## 🌟 Features in Detail
 
-### Mood Minting
-- **AI-Generated Artwork**: Each mood is transformed into unique visual art
-- **Metadata Storage**: Mood data stored on IPFS for decentralization
-- **Gas Optimization**: Efficient smart contract for cost-effective minting
+### 🔥 AI Roast Me
+- **Image Upload**: Camera or file upload for selfies
+- **AI Analysis**: Hugging Face models for image captioning and roast generation
+- **Community Voting**: Vote on the funniest roasts
+- **IPFS Storage**: Decentralized storage for images and metadata
+- **Social Sharing**: Share roasts on Farcaster and Twitter
 
-### Farcaster Integration
-- **Auto-Connection**: Seamless wallet connection in Farcaster Frame
-- **Simplified UX**: Clean interface when accessed through Farcaster
-- **Social Sharing**: Easy sharing of moods and achievements
+### 🧊 Icebreaker Mode
+- **Dynamic Prompts**: Create and answer quirky prompts
+- **Poll Creation**: Create polls for community engagement
+- **Category Management**: Organize prompts by categories
+- **Response Tracking**: Monitor engagement and responses
 
-### Achievement System
-- **Streak Tracking**: Monitor your daily minting consistency
-- **Badge Collection**: Earn badges for milestones and achievements
-- **Progress Visualization**: Beautiful UI for tracking your journey
+### ⚡ Chain Reaction
+- **Challenge Creation**: Start viral challenges with images
+- **Response System**: Join challenges and add responses
+- **Viral Growth**: Challenges spread across Farcaster
+- **Visual Content**: Image-based challenge system
 
-### AI Reviews
-- **Weekly Analysis**: Personalized mood insights every week
-- **Monthly Summaries**: Comprehensive monthly mood reports
-- **Trend Analysis**: Identify patterns in your emotional journey
+### 🏆 Points & Badges System
+- **Earning Points**: Participate in activities to earn points
+- **Achievement Badges**: Collect NFT badges for milestones
+- **Leaderboards**: Compete with other users
+- **Progress Tracking**: Monitor your journey and achievements
+
+### 🎨 Modern UI/UX
+- **Dark Theme**: Sleek dark interface with VibeCaster colors
+- **Gradient Backgrounds**: Vertical gradients for visual appeal
+- **DM Mono Font**: Clean, modern typography
+- **Responsive Design**: Optimized for all devices
+- **Glass Effects**: Modern backdrop blur and transparency
 
 ## 🔧 Configuration
 
@@ -131,19 +162,20 @@ src/
 
 | Variable | Description | Required |
 |----------|-------------|----------|
-| `NEXT_PUBLIC_CONTRACT_ADDRESS` | Smart contract address | ✅ |
+| `NEXT_PUBLIC_VIBECASTER_ADMIN_ADDRESS` | Admin contract address | ✅ |
+| `NEXT_PUBLIC_VIBECASTER_POINTS_ADDRESS` | Points contract address | ✅ |
+| `NEXT_PUBLIC_VIBECASTER_BADGES_ADDRESS` | Badges contract address | ✅ |
+| `NEXT_PUBLIC_ROAST_ME_ADDRESS` | RoastMe contract address | ✅ |
+| `NEXT_PUBLIC_ICEBREAKER_ADDRESS` | Icebreaker contract address | ✅ |
+| `NEXT_PUBLIC_CHAIN_REACTION_ADDRESS` | ChainReaction contract address | ✅ |
 | `NEXT_PUBLIC_WALLETCONNECT_PROJECT_ID` | WalletConnect project ID | ✅ |
 | `NEXT_PUBLIC_CDP_CLIENT_API_KEY` | Coinbase API key | ✅ |
+| `NEXT_PUBLIC_HUGGING_FACE_API_KEY` | Hugging Face API key | ✅ |
+| `NEXT_PUBLIC_PINATA_JWT` | Pinata JWT for IPFS | ✅ |
 
 ### Smart Contract Deployment
 
-1. **Deploy to Base Sepolia**
-   ```bash
-   cd contracts
-   forge script Deploy --rpc-url base-sepolia --broadcast --verify
-   ```
-
-2. **Update environment variables** with the deployed contract address
+All contracts are deployed on Base Sepolia testnet. See the [smart-contract README](../smart-contract/README.md) for deployment details.
 
 ## 🚀 Deployment
 
@@ -162,14 +194,25 @@ npm start
 
 ## 📱 Farcaster Mini App
 
-MintMyMood is available as a Farcaster Mini App, providing a native experience within the Farcaster ecosystem.
-
-**Access**: [https://farcaster.xyz/miniapps/oXpRXDCzmUMJ/mintmymood](https://farcaster.xyz/miniapps/oXpRXDCzmUMJ/mintmymood)
+VibeCaster is designed as a Farcaster Mini App, providing a native experience within the Farcaster ecosystem.
 
 ### Mini App Features
-- **Automatic Wallet Connection**: No manual wallet selection needed
+- **Automatic Wallet Connection**: Seamless Farcaster wallet integration
 - **Optimized UI**: Tailored for Farcaster Frame experience
-- **Social Integration**: Seamless sharing with Farcaster community
+- **Social Integration**: Easy sharing with Farcaster community
+- **Base MiniKit**: Enhanced Base ecosystem integration
+
+## 🎨 Design System
+
+### Color Palette
+- **Primary**: `#0C0420` (Dark Purple)
+- **Secondary**: `#5D3C64`, `#7B466A`, `#9F6496`
+- **Accent**: `#D391B0`, `#BA6E8F`
+- **Background**: Vertical gradient from `#0C0420` to `#5D3C64`
+
+### Typography
+- **Font**: DM Mono (400 weight)
+- **Modern, clean aesthetic**
 
 ## 🤝 Contributing
 
@@ -197,25 +240,25 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 - **Base Network** for the scalable L2 infrastructure
 - **Farcaster** for the social Web3 platform
-- **IPFS** for decentralized storage
-- **OpenAI** for AI-powered mood analysis
+- **Hugging Face** for AI model APIs
+- **IPFS/Pinata** for decentralized storage
 - **Vercel** for hosting and deployment
 
 ## 📞 Support
 
-- **Documentation**: [https://mintmymood.vercel.app](https://mintmymood.vercel.app)
-- **Issues**: [GitHub Issues](https://github.com/thebabalola/mintmymood/issues)
+- **Documentation**: [https://vibecaster.vercel.app](https://vibecaster.vercel.app)
+- **Issues**: [GitHub Issues](https://github.com/thebabalola/VibeCaster/issues)
 - **Discord**: Join our community for support and discussions
 
 ## 🔗 Links
 
-- **Live App**: [https://mintmymood.vercel.app](https://mintmymood.vercel.app)
-- **Farcaster Mini App**: [https://farcaster.xyz/miniapps/oXpRXDCzmUMJ/mintmymood](https://farcaster.xyz/miniapps/oXpRXDCzmUMJ/mintmymood)
-- **Smart Contract**: [Base Sepolia Explorer](https://sepolia.basescan.org)
-- **GitHub**: [https://github.com/thebabalola/mintmymood](https://github.com/thebabalola/mintmymood)
+- **Live App**: [https://vibecaster.vercel.app](https://vibecaster.vercel.app)
+- **Farcaster Mini App**: [https://farcaster.xyz/miniapps/vibecaster](https://farcaster.xyz/miniapps/vibecaster)
+- **Smart Contracts**: [Base Sepolia Explorer](https://sepolia.basescan.org)
+- **GitHub**: [https://github.com/thebabalola/VibeCaster](https://github.com/thebabalola/VibeCaster)
 
 ---
 
-**Made with ❤️ by the MintMyMood team**
+**Made with ❤️ by the VibeCaster team**
 
-*Transform your emotions into art, one mood at a time.*
+*GM VibeCaster fam! Let's make some magic happen! ✨*

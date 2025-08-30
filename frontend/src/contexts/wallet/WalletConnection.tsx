@@ -62,7 +62,7 @@ const WalletConnection = () => {
         className={`flex items-center gap-2 rounded-lg px-3 py-2 font-mono text-sm font-semibold transition-colors relative ${
           isWrongChain 
             ? "bg-yellow-100 text-yellow-800 hover:bg-yellow-200" 
-            : "bg-gray-100 text-[#222222] hover:bg-gray-200"
+            : "bg-vibecaster-light-purple text-white hover:bg-vibecaster-lavender"
         }`}
       >
         {/* Warning indicator for wrong chain */}
@@ -76,7 +76,7 @@ const WalletConnection = () => {
       </button>
 
       {isDropdownOpen && (
-        <div className="absolute right-0 top-full mt-2 w-72 origin-top-right rounded-xl border border-gray-200 bg-white p-2 shadow-lg z-50">
+        <div className="absolute right-0 top-full mt-2 w-72 origin-top-right rounded-xl border border-vibecaster-lavender/20 bg-vibecaster-light-purple backdrop-blur-sm p-2 shadow-lg z-50">
           {/* Chain warning section at top */}
           {isWrongChain && (
             <div className="mb-3 pb-3 border-b border-gray-200">
@@ -126,7 +126,7 @@ const WalletConnection = () => {
               handleCopy();
               setIsDropdownOpen(false);
             }}
-            className="w-full flex items-center gap-3 rounded-md px-3 py-2 text-left text-sm text-[#222222] hover:bg-gray-100"
+            className="w-full flex items-center gap-3 rounded-md px-3 py-2 text-left text-sm text-white hover:bg-vibecaster-lavender"
           >
             <Icon icon="solar:copy-line-duotone" className="w-5 h-5" />
             <span>Copy Address</span>
@@ -137,21 +137,21 @@ const WalletConnection = () => {
               href={`${account.chain.blockExplorers.default.url}/address/${account.address}`}
               target="_blank"
               rel="noopener noreferrer"
-              className="w-full flex items-center gap-3 rounded-md px-3 py-2 text-sm text-[#222222] hover:bg-gray-100"
+              className="w-full flex items-center gap-3 rounded-md px-3 py-2 text-sm text-white hover:bg-vibecaster-lavender"
             >
               <Icon icon="gridicons:external" className="w-5 h-5" />
               <span>View on Explorer</span>
             </a>
           )}
           
-          <div className="my-1 h-px bg-gray-200" />
+          <div className="my-1 h-px bg-vibecaster-lavender" />
           
           <button
             onClick={() => {
               disconnect();
               setIsDropdownOpen(false);
             }}
-            className="w-full flex items-center gap-3 rounded-md px-3 py-2 text-left text-sm text-[#FF6B6B] hover:bg-red-50"
+            className="w-full flex items-center gap-3 rounded-md px-3 py-2 text-left text-sm text-[#FF6B6B] hover:bg-red-500/10"
           >
             <LogOut className="w-5 h-5" />
             <span>Disconnect</span>
