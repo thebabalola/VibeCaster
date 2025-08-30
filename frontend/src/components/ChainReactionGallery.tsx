@@ -220,10 +220,10 @@ export default function ChainReactionGallery() {
 
   if (isLoading) {
     return (
-      <div className="flex items-center justify-center py-12">
+      <div className="flex items-center justify-center py-8 md:py-12">
         <div className="text-center">
-          <FaSpinner className="animate-spin text-4xl text-vibecaster-lavender mx-auto mb-4" />
-          <p className="text-vibecaster-light-purple">Loading chain reactions...</p>
+          <FaSpinner className="animate-spin text-3xl md:text-4xl text-vibecaster-lavender mx-auto mb-3 md:mb-4" />
+          <p className="text-sm md:text-base text-vibecaster-light-purple">⚡ Loading viral chain reactions... 🔥</p>
         </div>
       </div>
     );
@@ -232,13 +232,13 @@ export default function ChainReactionGallery() {
   return (
     <div className="space-y-6">
       {/* Header */}
-      <div className="text-center mb-8">
-        <h2 className="text-2xl font-bold text-white mb-2 flex items-center justify-center gap-2">
+      <div className="text-center mb-6 md:mb-8">
+        <h2 className="text-xl md:text-2xl font-bold text-white mb-2 flex items-center justify-center gap-2">
           <FaBolt className="text-yellow-500" />
           Chain Reactions
         </h2>
-        <p className="text-vibecaster-light-purple">
-          Start viral challenges and watch them spread! Join the fun and create amazing chain reactions!
+        <p className="text-sm md:text-base text-vibecaster-light-purple">
+          Start viral challenges and watch them spread like wildfire! Join the fun and create epic chain reactions!
         </p>
       </div>
 
@@ -246,16 +246,16 @@ export default function ChainReactionGallery() {
       <div className="flex justify-center">
         <div className="bg-vibecaster-dark/50 backdrop-blur-sm rounded-lg border border-vibecaster-lavender/20">
           <div className="flex">
-            <div className="px-4 py-3 text-center border-r border-vibecaster-lavender/20">
-              <p className="text-xl font-bold text-vibecaster-lavender">{totalChallenges?.toString() || '0'}</p>
-              <p className="text-xs text-vibecaster-light-purple">Total Challenges</p>
+            <div className="px-3 md:px-4 py-2 md:py-3 text-center border-r border-vibecaster-lavender/20">
+              <p className="text-lg md:text-xl font-bold text-vibecaster-lavender">{totalChallenges?.toString() || '0'}</p>
+              <p className="text-xs text-vibecaster-light-purple">Viral Challenges</p>
             </div>
-            <div className="px-4 py-3 text-center border-r border-vibecaster-lavender/20">
-              <p className="text-xl font-bold text-vibecaster-lavender">{totalResponses?.toString() || '0'}</p>
-              <p className="text-xs text-vibecaster-light-purple">Total Responses</p>
+            <div className="px-3 md:px-4 py-2 md:py-3 text-center border-r border-vibecaster-lavender/20">
+              <p className="text-lg md:text-xl font-bold text-vibecaster-lavender">{totalResponses?.toString() || '0'}</p>
+              <p className="text-xs text-vibecaster-light-purple">Epic Responses</p>
             </div>
-            <div className="px-4 py-3 text-center border-r border-vibecaster-lavender/20 last:border-r-0">
-              <p className="text-xl font-bold text-vibecaster-lavender">{challenges.length}</p>
+            <div className="px-3 md:px-4 py-2 md:py-3 text-center border-r border-vibecaster-lavender/20 last:border-r-0">
+              <p className="text-lg md:text-xl font-bold text-vibecaster-lavender">{challenges.length}</p>
               <p className="text-xs text-vibecaster-light-purple">Active Chains</p>
             </div>
           </div>
@@ -266,23 +266,23 @@ export default function ChainReactionGallery() {
       <div className="flex space-x-1 bg-vibecaster-dark/30 rounded-lg p-1">
         <button
           onClick={() => setActiveTab('create')}
-          className={`flex-1 py-2 px-4 rounded-md transition-colors ${
+          className={`flex-1 py-2 px-2 md:px-4 rounded-md transition-colors text-sm md:text-base ${
             activeTab === 'create'
               ? 'bg-vibecaster-lavender text-vibecaster-dark'
               : 'text-vibecaster-light-purple hover:text-vibecaster-lavender'
           }`}
         >
-          Create Challenge
+          🚀 Launch Challenge
         </button>
         <button
           onClick={() => setActiveTab('challenges')}
-          className={`flex-1 py-2 px-4 rounded-md transition-colors ${
+          className={`flex-1 py-2 px-2 md:px-4 rounded-md transition-colors text-sm md:text-base ${
             activeTab === 'challenges'
               ? 'bg-vibecaster-lavender text-vibecaster-dark'
               : 'text-vibecaster-light-purple hover:text-vibecaster-lavender'
           }`}
         >
-          Challenges
+          🔥 Viral Challenges
         </button>
       </div>
 
@@ -291,13 +291,12 @@ export default function ChainReactionGallery() {
         {/* Challenges Tab */}
         {activeTab === 'challenges' && (
           <div className="space-y-4">
-            <h3 className="text-xl font-semibold text-vibecaster-lavender">Active Challenges</h3>
             {challenges.length === 0 ? (
-              <p className="text-vibecaster-light-purple text-center py-8">No challenges yet. Create one to get started!</p>
+              <p className="text-sm md:text-base text-vibecaster-light-purple text-center py-6 md:py-8">No challenges yet. Launch one to start the viral wave! 🚀</p>
             ) : (
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
                 {challenges.map((challenge) => (
-                  <div key={challenge.id} className="bg-vibecaster-dark/30 backdrop-blur-sm rounded-lg p-4 border border-vibecaster-lavender/20">
+                  <div key={challenge.id} className="bg-vibecaster-dark/30 backdrop-blur-sm rounded-lg p-3 md:p-4 border border-vibecaster-lavender/20">
                     {/* Challenge Image */}
                     {challenge.data.promptImageIpfsHash && (
                       <div className="relative mb-3">
@@ -306,22 +305,22 @@ export default function ChainReactionGallery() {
                           alt="Challenge"
                           width={300}
                           height={200}
-                          className="w-full h-32 object-cover rounded-lg"
+                          className="w-full h-24 md:h-32 object-cover rounded-lg"
                         />
                         <div className="absolute top-2 right-2">
-                          <div className="w-8 h-8 rounded-full bg-yellow-500/20 flex items-center justify-center">
-                            <FaBolt size={14} className="text-yellow-400" />
+                          <div className="w-6 h-6 md:w-8 md:h-8 rounded-full bg-yellow-500/20 flex items-center justify-center">
+                            <FaBolt size={12} className="md:w-3.5 md:h-3.5 text-yellow-400" />
                           </div>
                         </div>
                       </div>
                     )}
 
                     {/* Challenge Info */}
-                    <h4 className="text-white font-semibold mb-2">{challenge.data.prompt}</h4>
-                    <p className="text-xs text-vibecaster-light-purple mb-3">
+                    <h4 className="text-sm md:text-base text-white font-semibold mb-2">{challenge.data.prompt}</h4>
+                    <p className="text-xs text-vibecaster-light-purple mb-2 md:mb-3">
                       by {challenge.data.initiator.slice(0, 6)}...{challenge.data.initiator.slice(-4)}
                     </p>
-                    <p className="text-xs text-vibecaster-light-purple mb-3">
+                    <p className="text-xs text-vibecaster-light-purple mb-2 md:mb-3">
                       {formatTimeAgo(challenge.data.timestamp)}
                     </p>
 
@@ -338,9 +337,9 @@ export default function ChainReactionGallery() {
                         setSelectedChallengeId(challenge.id);
                         setSelectedParentResponseId(null);
                       }}
-                      className="w-full bg-vibecaster-lavender text-vibecaster-dark px-4 py-2 rounded-md hover:bg-vibecaster-light-purple transition-colors"
+                      className="w-full bg-vibecaster-lavender text-vibecaster-dark px-3 md:px-4 py-2 rounded-md hover:bg-vibecaster-light-purple transition-colors text-sm md:text-base"
                     >
-                      Join Challenge
+                      ⚡ Join the Chain
                     </button>
                   </div>
                 ))}
@@ -351,24 +350,24 @@ export default function ChainReactionGallery() {
 
         {/* Create Tab */}
         {activeTab === 'create' && (
-          <div className="space-y-6">
-            <div className="bg-vibecaster-dark/30 backdrop-blur-sm rounded-lg p-6">
-              <h3 className="text-xl font-semibold text-vibecaster-lavender mb-4">Create a Challenge</h3>
-              <div className="space-y-4">
+          <div className="space-y-4 md:space-y-6">
+            <div className="bg-vibecaster-dark/30 backdrop-blur-sm rounded-lg p-4 md:p-6">
+              <h3 className="text-lg md:text-xl font-semibold text-vibecaster-lavender mb-3 md:mb-4">Launch Viral Challenge</h3>
+              <div className="space-y-3 md:space-y-4">
                 <div>
-                  <label className="block text-vibecaster-light-purple mb-2">Challenge Prompt</label>
+                  <label className="block text-sm md:text-base text-vibecaster-light-purple mb-2">Challenge Prompt</label>
                   <textarea
                     value={promptText}
                     onChange={(e) => setPromptText(e.target.value)}
-                    placeholder="What's your viral challenge?"
-                    className="w-full bg-vibecaster-dark/50 border border-vibecaster-lavender/20 rounded-md px-3 py-2 text-vibecaster-lavender focus:outline-none focus:border-vibecaster-lavender resize-none"
+                    placeholder="Drop your viral challenge here... 🔥"
+                    className="w-full bg-vibecaster-dark/50 border border-vibecaster-lavender/20 rounded-md px-3 py-2 text-sm md:text-base text-vibecaster-lavender focus:outline-none focus:border-vibecaster-lavender resize-none"
                     rows={3}
                   />
                 </div>
 
                 {/* Image Upload */}
                 <div>
-                  <label className="block text-vibecaster-light-purple mb-2">Challenge Image (Optional)</label>
+                  <label className="block text-sm md:text-base text-vibecaster-light-purple mb-2">Challenge Image (Optional)</label>
                   
                   {/* Image Preview */}
                   {imagePreview && (
@@ -378,31 +377,31 @@ export default function ChainReactionGallery() {
                         alt="Selected image"
                         width={300}
                         height={200}
-                        className="w-full h-32 object-cover rounded-lg"
+                        className="w-full h-24 md:h-32 object-cover rounded-lg"
                       />
                       <button
                         onClick={clearForm}
-                        className="absolute top-2 right-2 w-8 h-8 bg-red-500 hover:bg-red-600 text-white rounded-full flex items-center justify-center transition-colors"
+                        className="absolute top-2 right-2 w-6 h-6 md:w-8 md:h-8 bg-red-500 hover:bg-red-600 text-white rounded-full flex items-center justify-center transition-colors"
                       >
-                        <FaTimes size={14} />
+                        <FaTimes size={12} className="md:w-3.5 md:h-3.5" />
                       </button>
                     </div>
                   )}
 
                   {/* Upload Buttons */}
-                  <div className="flex gap-3">
+                  <div className="flex gap-2 md:gap-3">
                     <button
                       onClick={handleCameraCapture}
-                      className="flex-1 bg-vibecaster-lavender hover:bg-vibecaster-lavender/80 text-white px-4 py-3 rounded-lg transition-colors flex items-center justify-center gap-2"
+                      className="flex-1 bg-vibecaster-lavender hover:bg-vibecaster-lavender/80 text-white px-3 md:px-4 py-2 md:py-3 rounded-lg transition-colors flex items-center justify-center gap-2 text-sm md:text-base"
                     >
-                      <FaCamera size={16} />
+                      <FaCamera size={14} className="md:w-4 md:h-4" />
                       Camera
                     </button>
                     <button
                       onClick={() => fileInputRef.current?.click()}
-                      className="flex-1 bg-vibecaster-purple-dark hover:bg-vibecaster-purple-dark/80 text-white px-4 py-3 rounded-lg transition-colors flex items-center justify-center gap-2"
+                      className="flex-1 bg-vibecaster-purple-dark hover:bg-vibecaster-purple-dark/80 text-white px-3 md:px-4 py-2 md:py-3 rounded-lg transition-colors flex items-center justify-center gap-2 text-sm md:text-base"
                     >
-                      <FaUpload size={16} />
+                      <FaUpload size={14} className="md:w-4 md:h-4" />
                       Upload
                     </button>
                   </div>
@@ -419,9 +418,9 @@ export default function ChainReactionGallery() {
                 <button
                   onClick={handleCreateChallenge}
                   disabled={isCreatingChallenge}
-                  className="w-full bg-vibecaster-lavender text-vibecaster-dark py-2 rounded-md hover:bg-vibecaster-light-purple transition-colors disabled:opacity-50"
+                  className="w-full bg-vibecaster-lavender text-vibecaster-dark py-2 rounded-md hover:bg-vibecaster-light-purple transition-colors disabled:opacity-50 text-sm md:text-base"
                 >
-                  {isCreatingChallenge ? 'Creating...' : 'Create Challenge'}
+                  {isCreatingChallenge ? '🚀 Launching...' : '🚀 Launch Viral Challenge'}
                 </button>
               </div>
             </div>
@@ -431,17 +430,17 @@ export default function ChainReactionGallery() {
 
       {/* Join Challenge Modal */}
       {selectedChallengeId !== null && (
-        <div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center z-50">
-          <div className="bg-vibecaster-dark rounded-lg p-6 w-full max-w-md mx-4">
-            <h3 className="text-xl font-semibold text-vibecaster-lavender mb-4">Join Challenge</h3>
-            <div className="space-y-4">
+        <div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center z-50 p-4">
+          <div className="bg-vibecaster-dark rounded-lg p-4 md:p-6 w-full max-w-md">
+            <h3 className="text-lg md:text-xl font-semibold text-vibecaster-lavender mb-3 md:mb-4">⚡ Join the Chain</h3>
+            <div className="space-y-3 md:space-y-4">
               <div>
-                <label className="block text-vibecaster-light-purple mb-2">Your Response</label>
+                <label className="block text-sm md:text-base text-vibecaster-light-purple mb-2">Your Epic Response</label>
                 <textarea
                   value={responseText}
                   onChange={(e) => setResponseText(e.target.value)}
-                  placeholder="Your response to the challenge..."
-                  className="w-full bg-vibecaster-dark/50 border border-vibecaster-lavender/20 rounded-md px-3 py-2 text-vibecaster-lavender focus:outline-none focus:border-vibecaster-lavender resize-none"
+                  placeholder="Drop your epic response here... 🔥"
+                  className="w-full bg-vibecaster-dark/50 border border-vibecaster-lavender/20 rounded-md px-3 py-2 text-sm md:text-base text-vibecaster-lavender focus:outline-none focus:border-vibecaster-lavender resize-none"
                   rows={4}
                 />
               </div>
@@ -451,16 +450,16 @@ export default function ChainReactionGallery() {
                     setSelectedChallengeId(null);
                     setResponseText('');
                   }}
-                  className="flex-1 bg-vibecaster-purple-dark text-vibecaster-lavender py-2 rounded-md hover:bg-vibecaster-dark transition-colors"
+                  className="flex-1 bg-vibecaster-purple-dark text-vibecaster-lavender py-2 rounded-md hover:bg-vibecaster-dark transition-colors text-sm md:text-base"
                 >
                   Cancel
                 </button>
                 <button
                   onClick={handleJoinChallenge}
                   disabled={isJoiningChallenge}
-                  className="flex-1 bg-vibecaster-lavender text-vibecaster-dark py-2 rounded-md hover:bg-vibecaster-light-purple transition-colors disabled:opacity-50"
+                  className="flex-1 bg-vibecaster-lavender text-vibecaster-dark py-2 rounded-md hover:bg-vibecaster-light-purple transition-colors disabled:opacity-50 text-sm md:text-base"
                 >
-                  {isJoiningChallenge ? 'Joining...' : 'Join'}
+                  {isJoiningChallenge ? '⚡ Joining...' : '⚡ Join the Chain'}
                 </button>
               </div>
             </div>

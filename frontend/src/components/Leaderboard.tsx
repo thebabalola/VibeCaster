@@ -11,12 +11,12 @@ export default function Leaderboard() {
         </div>
       </div>
       
-      <h2 className="text-3xl font-bold text-vibecaster-lavender mb-4">Leaderboard</h2>
-      <p className="text-vibecaster-light-purple text-lg mb-6">Under Construction</p>
+      <h2 className="text-2xl md:text-3xl font-bold text-vibecaster-lavender mb-4">🏆 Leaderboard</h2>
+      <p className="text-sm md:text-lg text-vibecaster-light-purple mb-6">We're crafting something legendary!</p>
       
       <div className="flex justify-center items-center gap-2 text-vibecaster-light-purple">
         <FaHammer size={16} />
-        <span className="text-sm">Coming soon with epic rankings and rewards!</span>
+        <span className="text-xs md:text-sm">Epic rankings, legendary rewards, and viral fame await!</span>
       </div>
     </div>
   );
