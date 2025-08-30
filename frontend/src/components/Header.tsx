@@ -4,6 +4,7 @@ import { useState } from "react";
 import { useAccount } from "wagmi";
 import ConnectButton from "./ConnectButton";
 import { FaBars, FaTimes } from "react-icons/fa";
+import Image from "next/image";
 
 export default function Header() {
   const { address, isConnected } = useAccount();
@@ -12,35 +13,22 @@ export default function Header() {
   const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
 
   return (
-    <header className="sticky top-0 z-50 glass-effect border-b border-vibecaster-lavender/20">
+    <header className="sticky top-0 z-50">
       <div className="container mx-auto px-4 py-4">
         <div className="flex items-center justify-between">
           {/* Logo */}
           <div className="flex items-center space-x-3">
-            <div className="w-8 h-8 bg-gradient-to-br from-vibecaster-lavender to-vibecaster-pink-light rounded-lg flex items-center justify-center">
-              <span className="text-white font-bold text-sm">VC</span>
-            </div>
-            <div>
-              <h1 className="text-xl font-bold text-white">
-                <span className="text-vibecaster-lavender">Vibe</span>
-                <span className="text-red-500">e</span>
-                <span className="text-white">Caster</span>
-              </h1>
-              <p className="text-xs text-vibecaster-pink-light">The Future of Social on Farcaster</p>
-            </div>
+            <Image
+              src="/vibecaster-logo.png"
+              alt="VibeCaster Logo"
+              width={150}
+              height={150}
+              className="rounded-lg"
+            />
           </div>
 
-          {/* Desktop Navigation */}
+          {/* Desktop Navigation - Only Admin */}
           <nav className="hidden md:flex items-center space-x-6">
-            <a href="/" className="text-white hover:text-vibecaster-lavender transition-colors">
-              Dashboard
-            </a>
-            <a href="/gallery" className="text-white hover:text-vibecaster-lavender transition-colors">
-              Gallery
-            </a>
-            <a href="/leaderboard" className="text-white hover:text-vibecaster-lavender transition-colors">
-              Leaderboard
-            </a>
             {isConnected && (
               <a href="/admin" className="text-vibecaster-pink-light hover:text-vibecaster-lavender transition-colors">
                 Admin
@@ -62,31 +50,10 @@ export default function Header() {
           </div>
         </div>
 
-        {/* Mobile Navigation */}
+        {/* Mobile Navigation - Only Admin */}
         {isMenuOpen && (
           <nav className="md:hidden mt-4 pb-4 border-t border-vibecaster-lavender/20 pt-4">
             <div className="flex flex-col space-y-3">
-              <a 
-                href="/" 
-                className="text-white hover:text-vibecaster-lavender transition-colors py-2"
-                onClick={() => setIsMenuOpen(false)}
-              >
-                Dashboard
-              </a>
-              <a 
-                href="/gallery" 
-                className="text-white hover:text-vibecaster-lavender transition-colors py-2"
-                onClick={() => setIsMenuOpen(false)}
-              >
-                Gallery
-              </a>
-              <a 
-                href="/leaderboard" 
-                className="text-white hover:text-vibecaster-lavender transition-colors py-2"
-                onClick={() => setIsMenuOpen(false)}
-              >
-                Leaderboard
-              </a>
               {isConnected && (
                 <a 
                   href="/admin" 
