@@ -1,8 +1,8 @@
 {
-  "name": "First Mint Badge",
-  "description": "Awarded to users for minting their very first mood NFT on MintMyMood.",
-  "image": "https://chocolate-electrical-wasp-990.mypinata.cloud/ipfs/bafybeihqxfb2xsl7265kaukmo44tfax6wu34w63ni7s65rw5mk3ujzujsi/0-First-Mint-Badge.png",
-  "external_url": "https://mintmymood.xyz",
+  "name": "First Activity Badge",
+  "description": "Awarded to users for their very first activity on VibeCaster.",
+  "image": "ipfs://QmYourImageHashHere",
+  "external_url": "https://vibecasters.vercel.app",
   "attributes": [
     {
       "trait_type": "Badge Type",

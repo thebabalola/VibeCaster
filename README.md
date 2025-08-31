@@ -1,36 +1,42 @@
-# MintMyMood 🌟
+# VibeCaster 🚀
 
-**Transform your daily emotions into unique NFTs and share your mood journey with friends on Base Sepolia!**
+**The Future of Social on Farcaster - Roast, Create & Connect!**
 
 ## 🎯 Overview
 
-MintMyMood is a revolutionary Web3 application that allows users to mint their daily emotions as unique NFTs on the Base Sepolia network. Built with modern web technologies and integrated with Farcaster, it provides a seamless experience for capturing, sharing, and tracking your emotional journey.
+VibeCaster is a revolutionary Web3 social platform built on Base that combines AI-powered roasting, interactive icebreakers, and viral chain reactions. Built with modern web technologies and deeply integrated with Farcaster, it provides a unique social experience for creating, sharing, and connecting through humor and creativity.
 
 ## 📁 Project Structure
 
-This repository contains the complete MintMyMood project with the following components:
+This repository contains the complete VibeCaster project with the following components:
 
 ```
-mintmymoods/
-├── mintmymood-contract/     # Smart contract (Solidity + Foundry)
-├── mintmymood-frontend/     # Next.js frontend application
+VibeCaster/
+├── frontend/                 # Next.js frontend application
+├── smart-contract/          # Smart contracts (Solidity + Hardhat)
 └── badge-n-metadata/        # Badge images and metadata
 ```
 
-### 🏗️ Smart Contract (`mintmymood-contract/`)
+### 🏗️ Smart Contracts (`smart-contract/`)
 
-- **Network**: Base Sepolia testnet
-- **Contract Address**: `0x4868cdcb72decb774d3154d72e572dc0094d8e41`
-- **Framework**: Foundry
-- **Features**: ERC-721 NFTs with mood-based minting
+- **Network**: Base mainnet
+- **Framework**: Hardhat
+- **Contracts**:
+  - `VibeCasterAdmin.sol` - Central admin for platform management
+  - `VibeCasterPoints.sol` - User points and rewards system
+  - `VibeCasterBadges.sol` - NFT badges for achievements
+  - `RoastMeContract.sol` - AI-powered roast submissions and voting
+  - `IcebreakerContract.sol` - Interactive prompts, responses, and polls
+  - `ChainReactionContract.sol` - Viral challenges and responses
 
-### 🎨 Frontend (`mintmymood-frontend/`)
+### 🎨 Frontend (`frontend/`)
 
 - **Framework**: Next.js 15 with App Router
 - **Styling**: Tailwind CSS 4
 - **Web3**: Wagmi + Viem
 - **Wallet Integration**: Farcaster Mini App Connector
-- **Live Demo**: [mintmymood.vercel.app](https://mintmymood.vercel.app)
+- **AI Integration**: Hugging Face Inference API
+- **Storage**: IPFS (Pinata) for decentralized content storage
 
 ### 🏆 Badge System (`badge-n-metadata/`)
 
@@ -43,15 +49,16 @@ mintmymoods/
 
 - Node.js 18+
 - npm or yarn
-- Foundry (for smart contract development)
+- Hardhat (for smart contract development)
 - MetaMask or any Web3 wallet
-- Base Sepolia testnet ETH
+- Base mainnet ETH
+- Hugging Face API key (for AI features)
 
 ### Frontend Setup
 
 1. **Navigate to frontend directory**
    ```bash
-   cd mintmymood-frontend/frontends-mym
+   cd frontend
    ```
 
 2. **Install dependencies**
@@ -66,9 +73,10 @@ mintmymoods/
    
    Add your configuration:
    ```env
-   NEXT_PUBLIC_CONTRACT_ADDRESS=0x4868cdcb72decb774d3154d72e572dc0094d8e41
    NEXT_PUBLIC_WALLETCONNECT_PROJECT_ID=your_walletconnect_project_id
    NEXT_PUBLIC_CDP_CLIENT_API_KEY=your_coinbase_api_key
+   NEXT_PUBLIC_HUGGING_FACE_API_KEY=your_huggingface_api_key
+   NEXT_PUBLIC_PINATA_JWT=your_pinata_jwt_token
    ```
 
 4. **Run the development server**
@@ -83,48 +91,91 @@ mintmymoods/
 
 1. **Navigate to contract directory**
    ```bash
-   cd mintmymood-contract
+   cd smart-contract
    ```
 
-2. **Install Foundry dependencies**
+2. **Install dependencies**
    ```bash
-   forge install
+   npm install
    ```
 
 3. **Set up environment variables**
    ```bash
    # Create .env file with:
-   BASE_SEPOLIA_RPC_URL=your_base_sepolia_rpc_url
+   BASE_RPC_URL=your_base_rpc_url
    BASESCAN_API_KEY=your_basescan_api_key
    PRIVATE_KEY=your_private_key
    ```
 
 4. **Compile contracts**
    ```bash
-   forge build
+   npx hardhat compile
    ```
 
 5. **Run tests**
    ```bash
-   forge test
+   npx hardhat test
    ```
 
 ## ✨ Key Features
 
-- **🎨 Mood Minting**: Transform your emotions into beautiful, AI-generated NFT artwork
-- **📱 Farcaster Integration**: Seamless wallet connection and sharing within the Farcaster ecosystem
-- **🏆 Achievement System**: Earn badges and track your minting streaks
-- **📊 AI-Powered Reviews**: Get personalized weekly and monthly mood analysis
-- **🖼️ Gallery**: Browse and showcase your minted moods
-- **📈 Leaderboard**: Compete with other users for top minter status
-- **🌐 Multi-Wallet Support**: Connect with MetaMask, WalletConnect, and more
+### 🔥 **Roast Me**
+- **AI-Powered Roasting**: Upload images and get hilarious AI-generated roasts
+- **Community Voting**: Vote on the best roasts and earn points
+- **Farcaster Sharing**: Share your roasts directly to Farcaster
+- **IPFS Storage**: Decentralized storage for images and roast content
+
+### ❄️ **Icebreaker**
+- **Interactive Prompts**: Create and answer fun icebreaker questions
+- **Community Polls**: Create polls and see community responses
+- **Category System**: Organized prompts by categories
+- **Response Tracking**: Track engagement and responses
+
+### ⚡ **Chain Reaction**
+- **Viral Challenges**: Start and join viral challenges
+- **Community Participation**: Watch challenges spread across the community
+- **Response Tracking**: Monitor challenge responses and engagement
+- **Viral Mechanics**: Built-in viral sharing and participation
+
+### 🏆 **Activity & Rewards**
+- **Points System**: Earn points for participation and engagement
+- **Badge System**: Unlock achievements and collect NFT badges
+- **Leaderboard**: Compete with other users for top positions
+- **Activity Tracking**: Monitor your social engagement
+
+### 👑 **Admin Dashboard**
+- **Contract Management**: Manage all smart contracts from one interface
+- **User Management**: Award/deduct points and manage user permissions
+- **Badge Management**: Upload and manage achievement badges
+- **Platform Control**: Full administrative control over the platform
 
 ## 🔗 Links
 
-- **Live App**: [mintmymood.vercel.app](https://mintmymood.vercel.app)
-- **Farcaster Mini App**: [Farcaster Mini App](https://farcaster.xyz/miniapps/oXpRXDCzmUMJ/mintmymood)
-- **Smart Contract**: [Base Sepolia Explorer](https://sepolia.basescan.org/address/0x4868cdcb72decb774d3154d72e572dc0094d8e41)
-- **GitHub**: [github.com/thebabalola/mintmymood](https://github.com/thebabalola/mintmymood)
+- **Live App**: [vibecaster.vercel.app](https://vibecaster.vercel.app)
+- **Farcaster Mini App**: [Farcaster Mini App](https://farcaster.xyz/miniapps/vibecaster)
+- **Smart Contracts**: [Base Explorer](https://basescan.org/address/vibecaster)
+- **GitHub**: [github.com/thebabalola/VibeCaster](https://github.com/thebabalola/VibeCaster)
+
+## 🛠️ Technology Stack
+
+### Frontend
+- **Next.js 15** - React framework with App Router
+- **Tailwind CSS 4** - Utility-first CSS framework
+- **Wagmi + Viem** - Web3 hooks and utilities
+- **Farcaster Mini App** - Social wallet integration
+- **Hugging Face API** - AI model integration
+- **IPFS (Pinata)** - Decentralized storage
+
+### Smart Contracts
+- **Solidity** - Smart contract language
+- **Hardhat** - Development framework
+- **OpenZeppelin** - Security libraries
+- **Base Network** - Layer 2 scaling solution
+
+### AI & Storage
+- **Hugging Face** - AI model inference
+- **IPFS** - Decentralized file storage
+- **Pinata** - IPFS pinning service
 
 ## 📄 License
 
@@ -132,6 +183,6 @@ This project is licensed under the MIT License.
 
 ---
 
-**Made with ❤️ by the MintMyMood team**
+**Made with ❤️ by the VibeCaster team**
 
-_Transform your emotions into art, one mood at a time._
+_Roast, Create & Connect - The Future of Social on Farcaster! 🚀✨_

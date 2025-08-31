@@ -1,8 +1,8 @@
 {
   "name": "Mood Maestro Badge",
-  "description": "Awarded to users who mint a large number of mood NFTs, proving their dedication to self-expression.",
-  "image": "https://chocolate-electrical-wasp-990.mypinata.cloud/ipfs/bafybeihqxfb2xsl7265kaukmo44tfax6wu34w63ni7s65rw5mk3ujzujsi/1-Mood-Maestro-Badge.png",
-  "external_url": "https://mintmymood.xyz",
+  "description": "Awarded to users for consistent mood tracking and engagement on VibeCaster.",
+  "image": "ipfs://QmYourImageHashHere",
+  "external_url": "https://vibecasters.vercel.app",
   "attributes": [
     {
       "trait_type": "Badge Type",

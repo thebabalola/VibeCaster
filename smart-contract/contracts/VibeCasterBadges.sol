@@ -91,7 +91,7 @@ contract VibeCasterBadges is ERC721, Ownable {
         return badgeId;
     }
 
-    // User claim functions (inspired by MintMyMood)
+    // User claim functions (inspired by VibeCaster)
     function claimFirstActivityBadge() external {
         require(!hasFirstActivityBadge[msg.sender], "First activity badge already claimed");
         require(bytes(firstActivityBadgeURI).length > 0, "Badge URI not set by owner");
