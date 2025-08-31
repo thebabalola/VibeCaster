@@ -30,7 +30,7 @@ const ROAST_ME_CONTRACT_ADDRESS = "0x15978cDBe7cc4238825647b1A61d6efA9371D5C0";
 const ICEBREAKER_CONTRACT_ADDRESS = "0x7CecE53Ea570457C885fE09C39E82D1cD8A0da6B";
 const CHAIN_REACTION_CONTRACT_ADDRESS = "0x3A8F031e2A4040E8D599b8dbAB09B4f6251a07B9";
 
-// IPFS Upload Function (similar to MintMyMood)
+// IPFS Upload Function (similar to VibeCaster)
 async function uploadBadgeToIPFS(
   image: File,
   badgeName: string,

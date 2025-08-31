@@ -5,7 +5,7 @@ import { createPortal } from "react-dom";
 import { generateMoodImage } from "../lib/hugApi";
 import { uploadMoodToIPFS } from "../lib/ipfs";
 import { useWriteContract, useAccount, useReadContract } from "wagmi";
-import { MintMyMoodABI } from "../lib/MintMyMoodABI";
+import { VibeCasterABI } from "../lib/VibeCasterABI";
 import { MoodType } from "../types";
 import {
   FaImage,
@@ -66,7 +66,7 @@ export default function MoodForm() {
   }, []);
   const { data: moodTypes } = useReadContract({
     address: process.env.NEXT_PUBLIC_CONTRACT_ADDRESS as `0x${string}`,
-    abi: MintMyMoodABI,
+    abi: VibeCasterABI,
     functionName: "getMoodTypes",
   }) as { data: MoodType[] | undefined };
 
@@ -115,7 +115,7 @@ export default function MoodForm() {
       setLoadingMessage("Confirming transaction...");
       await writeContractAsync({
         address: process.env.NEXT_PUBLIC_CONTRACT_ADDRESS as `0x${string}`,
-        abi: MintMyMoodABI,
+        abi: VibeCasterABI,
         functionName: "mintMood",
         args: [metadataUri, mood],
       });

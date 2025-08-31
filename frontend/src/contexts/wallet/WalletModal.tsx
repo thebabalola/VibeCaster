@@ -36,7 +36,7 @@ const WalletModal = () => {
                        (window as any).warpcast ||
                        // Check for Mini App specific context
                        (window as any).miniapp ||
-                       // Check for specific MintMyMood Mini App
+                       // Check for specific VibeCaster Mini App
                        window.location.href.includes('farcaster.xyz/miniapps');
         
         setIsInFarcasterFrame(inFrame);

@@ -15,8 +15,8 @@ export default function ShareButtons({
   emoji,
   imageUrl,
 }: ShareProps) {
-  const farcasterUrl = `https://warpcast.com/~/compose?text=Minted ${moodType} mood ${emoji}: ${title} - ${caption} #MintMyMood`;
-  const twitterUrl = `https://twitter.com/intent/tweet?text=Minted ${moodType} mood ${emoji}: ${title} - ${caption} #MintMyMood`;
+  const farcasterUrl = `https://warpcast.com/~/compose?text=Minted ${moodType} mood ${emoji}: ${title} - ${caption} #VibeCaster`;
+const twitterUrl = `https://twitter.com/intent/tweet?text=Minted ${moodType} mood ${emoji}: ${title} - ${caption} #VibeCaster`;
 
   return (
     <div className="flex gap-2">

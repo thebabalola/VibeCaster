@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { useReadContract, usePublicClient } from "wagmi";
-import { MintMyMoodABI } from "../lib/MintMyMoodABI";
+import { VibeCasterABI } from "../lib/VibeCasterABI";
 import { FaImage, FaExclamationTriangle, FaSadTear } from "react-icons/fa";
 
 // Interface remains unchanged
@@ -143,7 +143,7 @@ export default function NFTGallery() {
   ];
   const { data: mintCount, isLoading: mintCountLoading } = useReadContract({
     address: contractAddress,
-    abi: MintMyMoodABI,
+            abi: VibeCasterABI,
     functionName: "totalSupply",
   });
   useEffect(() => {
@@ -161,7 +161,7 @@ export default function NFTGallery() {
           try {
             const uri = await publicClient.readContract({
               address: contractAddress,
-              abi: MintMyMoodABI,
+              abi: VibeCasterABI,
               functionName: "tokenURI",
               args: [BigInt(tokenId)],
             });

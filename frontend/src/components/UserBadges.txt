@@ -7,7 +7,7 @@ import {
   useWriteContract,
   useWaitForTransactionReceipt,
 } from "wagmi";
-import { MintMyMoodABI } from "../lib/MintMyMoodABI";
+import { VibeCasterABI } from "../lib/VibeCasterABI";
 import { FaCheckCircle, FaSpinner } from "react-icons/fa";
 
 // --- YOUR ORIGINAL INTERFACES (UNCHANGED) ---
@@ -156,7 +156,7 @@ export default function UserBadges() {
     if (!address) {
       return;
     }
-    const mintConfig = { abi: MintMyMoodABI, address: contractAddress };
+    const mintConfig = { abi: VibeCasterABI, address: contractAddress };
     try {
       switch (badgeId) {
         case "first-mint":
@@ -181,14 +181,14 @@ export default function UserBadges() {
   const { data: hasFirstMintBadge, refetch: refetchFirstMint } =
     useReadContract({
       address: contractAddress,
-      abi: MintMyMoodABI,
+      abi: VibeCasterABI,
       functionName: "hasFirstMintBadge",
       args: address ? [address] : undefined,
       query: { enabled: Boolean(address), refetchOnWindowFocus: false },
     });
   const { data: hasStreakBadge, refetch: refetchStreak } = useReadContract({
     address: contractAddress,
-    abi: MintMyMoodABI,
+    abi: VibeCasterABI,
     functionName: "hasStreakBadge",
     args: address ? [address] : undefined,
     query: { enabled: Boolean(address), refetchOnWindowFocus: false },
@@ -196,52 +196,52 @@ export default function UserBadges() {
   const { data: hasMoodMaestroBadge, refetch: refetchMaestro } =
     useReadContract({
       address: contractAddress,
-      abi: MintMyMoodABI,
+      abi: VibeCasterABI,
       functionName: "hasMoodMaestroBadge",
       args: address ? [address] : undefined,
       query: { enabled: Boolean(address), refetchOnWindowFocus: false },
     });
   const { data: userMintCount } = useReadContract({
     address: contractAddress,
-    abi: MintMyMoodABI,
+    abi: VibeCasterABI,
     functionName: "getMintCount",
     args: address ? [address] : undefined,
     query: { enabled: Boolean(address), refetchOnWindowFocus: false },
   });
   const { data: streakCount } = useReadContract({
     address: contractAddress,
-    abi: MintMyMoodABI,
+    abi: VibeCasterABI,
     functionName: "streakCount",
     args: address ? [address] : undefined,
     query: { enabled: Boolean(address), refetchOnWindowFocus: false },
   });
   const { data: streakMilestone } = useReadContract({
     address: contractAddress,
-    abi: MintMyMoodABI,
+    abi: VibeCasterABI,
     functionName: "streakMilestone",
     query: { refetchOnWindowFocus: false },
   });
   const { data: moodMaestroMilestone } = useReadContract({
     address: contractAddress,
-    abi: MintMyMoodABI,
+    abi: VibeCasterABI,
     functionName: "getMoodMaestroMilestone",
     query: { refetchOnWindowFocus: false },
   });
   const { data: firstMintBadgeURI } = useReadContract({
     address: contractAddress,
-    abi: MintMyMoodABI,
+    abi: VibeCasterABI,
     functionName: "firstMintBadgeURI",
     query: { refetchOnWindowFocus: false },
   });
   const { data: streakBadgeURI } = useReadContract({
     address: contractAddress,
-    abi: MintMyMoodABI,
+    abi: VibeCasterABI,
     functionName: "streakBadgeURI",
     query: { refetchOnWindowFocus: false },
   });
   const { data: moodMaestroBadgeURI } = useReadContract({
     address: contractAddress,
-    abi: MintMyMoodABI,
+    abi: VibeCasterABI,
     functionName: "moodMaestroBadgeURI",
     query: { refetchOnWindowFocus: false },
   });
