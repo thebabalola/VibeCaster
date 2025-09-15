@@ -30,14 +30,14 @@ const ROAST_ME_CONTRACT_ADDRESS = "0x15978cDBe7cc4238825647b1A61d6efA9371D5C0";
 const ICEBREAKER_CONTRACT_ADDRESS = "0x7CecE53Ea570457C885fE09C39E82D1cD8A0da6B";
 const CHAIN_REACTION_CONTRACT_ADDRESS = "0x3A8F031e2A4040E8D599b8dbAB09B4f6251a07B9";
 
-// IPFS Upload Function (similar to VibeCaster)
+// IPFS Upload Function for Badges (Private Files + Groups)
 async function uploadBadgeToIPFS(
   image: File,
   badgeName: string,
   badgeDescription: string,
   badgeType: string,
   rarity: string,
-  externalUrl: string = "https://vibecaster.xyz"
+  externalUrl: string = "https://vibecasters.vercel.app"
 ) {
   try {
     if (!process.env.NEXT_PUBLIC_PINATA_JWT) {
@@ -47,13 +47,41 @@ async function uploadBadgeToIPFS(
     const { PinataSDK } = await import("pinata");
     const pinata = new PinataSDK({
       pinataJwt: process.env.NEXT_PUBLIC_PINATA_JWT!,
+      pinataGateway: process.env.NEXT_PUBLIC_PINATA_GATEWAY || "http://pink-reasonable-falcon-782.mypinata.cloud/",
     });
 
-    console.log("Uploading badge image to Pinata...");
+    console.log("Setting up VibeCaster Badges group...");
 
-    // Upload image
-    const imageUpload = await pinata.upload.public.file(image);
-    console.log("Image uploaded:", imageUpload);
+    // Create or get the VibeCaster Badges group
+    let badgesGroup;
+    try {
+      // Try to create the group first
+      badgesGroup = await pinata.groups.private.create({
+        name: "VibeCaster Badges",
+      });
+      console.log("Created new VibeCaster Badges group:", badgesGroup.id);
+    } catch (error: any) {
+      if (error.message.includes("already exists")) {
+        // Group already exists, try to find it
+        const groups = await pinata.groups.private.list();
+        badgesGroup = groups.groups.find(group => group.name === "VibeCaster Badges");
+        if (!badgesGroup) {
+          throw new Error("Could not find or create VibeCaster Badges group");
+        }
+        console.log("Using existing VibeCaster Badges group:", badgesGroup.id);
+      } else {
+        throw error;
+      }
+    }
+
+    console.log("Uploading badge image to Private IPFS...");
+
+    // Upload image to Private IPFS and add to the group
+    const imageUpload = await pinata.upload.private
+      .file(image)
+      .group(badgesGroup.id);
+    
+    console.log("Private image uploaded to group:", imageUpload);
 
     const imageUri = `ipfs://${imageUpload.cid}`;
 
@@ -66,16 +94,24 @@ async function uploadBadgeToIPFS(
       attributes: [
         { trait_type: "Badge Type", value: badgeType },
         { trait_type: "Rarity", value: rarity },
+        { trait_type: "Access", value: "Private IPFS" },
+        { trait_type: "Group", value: "VibeCaster Badges" },
       ],
     };
 
     console.log("Uploading metadata to Pinata...");
 
-    // Upload metadata
+    // Upload metadata to public IPFS (so it's discoverable)
     const metadataUpload = await pinata.upload.public.json(metadata);
     console.log("Metadata uploaded:", metadataUpload);
 
-    return `ipfs://${metadataUpload.cid}`;
+    // Return both the image CID and metadata URI
+    return {
+      imageCid: imageUpload.cid,
+      metadataUri: `ipfs://${metadataUpload.cid}`,
+      groupId: badgesGroup.id,
+      privateImageUri: imageUri
+    };
   } catch (error) {
     console.error("Pinata upload failed:", error);
     throw error;
@@ -289,10 +325,10 @@ export default function AdminPage() {
       return;
     }
 
-    setBadgeUpload(prev => ({ ...prev, isUploading: true, uploadProgress: "Uploading badge to IPFS..." }));
+    setBadgeUpload(prev => ({ ...prev, isUploading: true, uploadProgress: "Uploading badge to Private IPFS..." }));
 
     try {
-      const metadataUri = await uploadBadgeToIPFS(
+      const uploadResult = await uploadBadgeToIPFS(
         badgeUpload.imageFile,
         badgeUpload.badgeName,
         badgeUpload.badgeDescription,
@@ -300,7 +336,14 @@ export default function AdminPage() {
         badgeUpload.rarity
       );
 
-      setBadgeUpload(prev => ({ ...prev, uploadProgress: "Badge uploaded successfully! Metadata URI: " + metadataUri }));
+      setBadgeUpload(prev => ({ 
+        ...prev, 
+        uploadProgress: `Badge uploaded successfully! 
+          Image CID: ${uploadResult.imageCid}
+          Metadata URI: ${uploadResult.metadataUri}
+          Group ID: ${uploadResult.groupId}
+          Private Image URI: ${uploadResult.privateImageUri}`
+      }));
 
       // Reset form
       setTimeout(() => {
@@ -337,6 +380,36 @@ export default function AdminPage() {
       isUploading: false,
       uploadProgress: ""
     });
+  };
+
+  // List all badges in the VibeCaster Badges group
+  const listBadgesInGroup = async () => {
+    try {
+      const { PinataSDK } = await import("pinata");
+      const pinata = new PinataSDK({
+        pinataJwt: process.env.NEXT_PUBLIC_PINATA_JWT!,
+        pinataGateway: process.env.NEXT_PUBLIC_PINATA_GATEWAY || "http://pink-reasonable-falcon-782.mypinata.cloud/",
+      });
+
+      // Get all private groups
+      const groups = await pinata.groups.private.list();
+      const badgesGroup = groups.groups.find(group => group.name === "VibeCaster Badges");
+      
+      if (badgesGroup) {
+        // Get details of the badges group
+        const groupDetails = await pinata.groups.private.get({
+          groupId: badgesGroup.id,
+        });
+        
+        console.log("VibeCaster Badges Group:", groupDetails);
+        alert(`Found VibeCaster Badges group with ID: ${badgesGroup.id}\nCreated: ${badgesGroup.createdAt}`);
+      } else {
+        alert("VibeCaster Badges group not found. Upload a badge first to create it.");
+      }
+    } catch (error) {
+      console.error("Error listing badges:", error);
+      alert("Failed to list badges: " + (error instanceof Error ? error.message : "Unknown error"));
+    }
   };
 
   // Admin Management Functions
@@ -964,12 +1037,20 @@ export default function AdminPage() {
               </div>
             )}
             {badgeUpload.uploadProgress && !badgeUpload.isUploading && (
-              <button
-                onClick={clearBadgeUpload}
-                className="mt-4 bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-lg transition-colors"
-              >
-                Clear Upload
-              </button>
+              <div className="flex gap-2 mt-4">
+                <button
+                  onClick={clearBadgeUpload}
+                  className="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-lg transition-colors"
+                >
+                  Clear Upload
+                </button>
+                <button
+                  onClick={listBadgesInGroup}
+                  className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg transition-colors"
+                >
+                  List Badges in Group
+                </button>
+              </div>
             )}
           </div>
         );

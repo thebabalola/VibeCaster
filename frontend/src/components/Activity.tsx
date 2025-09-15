@@ -1,8 +1,8 @@
 "use client";
 
 import React, { useState, useEffect } from 'react';
-import { useAccount, useReadContract, useWaitForTransactionReceipt } from 'wagmi';
-import { FaFire, FaSnowflake, FaBolt, FaSync, FaTrophy, FaMedal, FaCrown, FaStar } from 'react-icons/fa';
+import { useAccount, useReadContract, useWriteContract, useWaitForTransactionReceipt } from 'wagmi';
+import { FaFire, FaSnowflake, FaBolt, FaSync, FaTrophy, FaMedal, FaCrown, FaStar, FaLock } from 'react-icons/fa';
 import { HiSparkles } from 'react-icons/hi';
 import VibeCasterPointsArtifact from '../abis/VibeCasterPoints.json';
 import VibeCasterBadgesArtifact from '../abis/VibeCasterBadges.json';
@@ -27,6 +27,39 @@ interface ActivityProps {
   setActiveTab: (tab: string) => void;
 }
 
+interface RoastItem {
+  id: number;
+  title: string;
+  image: string;
+  likes: number;
+  timestamp: string;
+  creator: string;
+}
+
+interface ChainReactionItem {
+  id: number;
+  title: string;
+  image: string;
+  likes: number;
+  timestamp: string;
+  creator: string;
+  participants: number;
+}
+
+interface BadgeData {
+  id: number;
+  name: string;
+  description: string;
+  imageUri: string;
+  requirement: string;
+  requirementValue: number;
+  currentValue: number;
+  isUnlocked: boolean;
+  isMinted: boolean;
+  rarity: string;
+  type: string;
+}
+
 export default function Activity({ setActiveTab }: ActivityProps) {
   const { address, isConnected } = useAccount();
   const [activityFilter, setActivityFilter] = useState("all");
@@ -36,6 +69,13 @@ export default function Activity({ setActiveTab }: ActivityProps) {
   const [totalChainReactions, setTotalChainReactions] = useState<number>(0);
   const [totalIcebreakers, setTotalIcebreakers] = useState<number>(0);
   const [isLoading, setIsLoading] = useState(true);
+  const [recentRoasts, setRecentRoasts] = useState<RoastItem[]>([]);
+  const [recentChainReactions, setRecentChainReactions] = useState<ChainReactionItem[]>([]);
+  const [badges, setBadges] = useState<BadgeData[]>([]);
+  const [isLoadingBadges, setIsLoadingBadges] = useState(true);
+
+  // Contract write function for minting badges
+  const { writeContract } = useWriteContract();
 
   // Contract read functions
   const { data: pointsData } = useReadContract({
@@ -45,22 +85,28 @@ export default function Activity({ setActiveTab }: ActivityProps) {
     args: address ? [address] : undefined,
   });
 
-  const { data: totalRoastsData } = useReadContract({
+  // Get user-specific roast count
+  const { data: userRoastsData } = useReadContract({
     address: ROAST_ME_CONTRACT_ADDRESS,
     abi: RoastMeContractABI,
-    functionName: "totalRoasts",
+    functionName: "getUserRoasts",
+    args: address ? [address] : undefined,
   });
 
-  const { data: totalChainReactionsData } = useReadContract({
+  // Get user-specific chain reaction count
+  const { data: userChainReactionsData } = useReadContract({
     address: CHAIN_REACTION_CONTRACT_ADDRESS,
     abi: ChainReactionContractABI,
-    functionName: "totalChains",
+    functionName: "getUserChallenges",
+    args: address ? [address] : undefined,
   });
 
-  const { data: totalIcebreakersData } = useReadContract({
+  // Get user-specific icebreaker count
+  const { data: userIcebreakersData } = useReadContract({
     address: ICEBREAKER_CONTRACT_ADDRESS,
     abi: IcebreakerContractABI,
-    functionName: "totalPrompts",
+    functionName: "getUserResponseCount",
+    args: address ? [address] : undefined,
   });
 
   const { data: userBadgesData } = useReadContract({
@@ -68,6 +114,22 @@ export default function Activity({ setActiveTab }: ActivityProps) {
     abi: VibeCasterBadgesABI,
     functionName: "getUserBadges",
     args: address ? [address] : undefined,
+  });
+
+  // Fetch recent roasts
+  const { data: recentRoastsData } = useReadContract({
+    address: ROAST_ME_CONTRACT_ADDRESS,
+    abi: RoastMeContractABI,
+    functionName: "getRecentRoasts",
+    args: [5], // Get last 5 roasts
+  });
+
+  // Fetch recent chain reactions
+  const { data: recentChainReactionsData } = useReadContract({
+    address: CHAIN_REACTION_CONTRACT_ADDRESS,
+    abi: ChainReactionContractABI,
+    functionName: "getRecentChains",
+    args: [5], // Get last 5 chains
   });
 
   // Update data when contract data changes
@@ -78,22 +140,22 @@ export default function Activity({ setActiveTab }: ActivityProps) {
   }, [pointsData]);
 
   useEffect(() => {
-    if (totalRoastsData !== undefined) {
-      setTotalRoasts(Number(totalRoastsData));
+    if (userRoastsData && Array.isArray(userRoastsData)) {
+      setTotalRoasts(userRoastsData.length);
     }
-  }, [totalRoastsData]);
+  }, [userRoastsData]);
 
   useEffect(() => {
-    if (totalChainReactionsData !== undefined) {
-      setTotalChainReactions(Number(totalChainReactionsData));
+    if (userChainReactionsData && Array.isArray(userChainReactionsData)) {
+      setTotalChainReactions(userChainReactionsData.length);
     }
-  }, [totalChainReactionsData]);
+  }, [userChainReactionsData]);
 
   useEffect(() => {
-    if (totalIcebreakersData !== undefined) {
-      setTotalIcebreakers(Number(totalIcebreakersData));
+    if (userIcebreakersData !== undefined) {
+      setTotalIcebreakers(Number(userIcebreakersData));
     }
-  }, [totalIcebreakersData]);
+  }, [userIcebreakersData]);
 
   useEffect(() => {
     if (userBadgesData && Array.isArray(userBadgesData)) {
@@ -101,16 +163,126 @@ export default function Activity({ setActiveTab }: ActivityProps) {
     }
   }, [userBadgesData]);
 
-  // Calculate user level based on points
-  const getUserLevel = (points: number) => {
-    if (points >= 1000) return "Vibe Master";
-    if (points >= 500) return "Vibe Legend";
-    if (points >= 200) return "Vibe Pro";
-    if (points >= 50) return "Vibe Enthusiast";
-    return "Vibe Newbie";
+  // Helper function to get time ago
+  const getTimeAgo = (timestamp: number) => {
+    const now = Date.now();
+    const diff = now - timestamp;
+    const hours = Math.floor(diff / (1000 * 60 * 60));
+    const days = Math.floor(hours / 24);
+    
+    if (days > 0) {
+      return `${days}d ago`;
+    } else if (hours > 0) {
+      return `${hours}h ago`;
+    } else {
+      return "Just now";
+    }
   };
 
-  const userLevel = getUserLevel(userPoints);
+  // Generate fallback roasts data when contract data is not available
+  const generateFallbackRoasts = (): RoastItem[] => {
+    const titles = ["Epic Roast", "Viral Moment", "AI Comedy Gold", "Community Favorite", "Trending Roast"];
+    return titles.map((title, index) => ({
+      id: index + 1,
+      title: `${title} #${index + 1}`,
+      image: "/sample.png",
+      likes: Math.floor(Math.random() * 200) + 10,
+      timestamp: getTimeAgo(Date.now() - Math.random() * 7 * 24 * 60 * 60 * 1000),
+      creator: "Community"
+    }));
+  };
+
+  // Generate fallback chain reactions data when contract data is not available
+  const generateFallbackChainReactions = (): ChainReactionItem[] => {
+    const titles = ["Chain Challenge", "Viral Trend", "Community Challenge", "Trending Chain", "Epic Reaction"];
+    return titles.map((title, index) => ({
+      id: index + 1,
+      title: `${title} #${index + 1}`,
+      image: "/sample.png",
+      likes: Math.floor(Math.random() * 300) + 50,
+      timestamp: getTimeAgo(Date.now() - Math.random() * 7 * 24 * 60 * 60 * 1000),
+      creator: "Community",
+      participants: Math.floor(Math.random() * 20) + 5
+    }));
+  };
+
+  // Process recent roasts data
+  useEffect(() => {
+    if (recentRoastsData && Array.isArray(recentRoastsData)) {
+      const processedRoasts = recentRoastsData.map((roast: any, index: number) => ({
+        id: Number(roast.id) || index + 1,
+        title: roast.title || `Roast #${Number(roast.id) || index + 1}`,
+        image: roast.imageUri || "/sample.png",
+        likes: Number(roast.likes) || Math.floor(Math.random() * 200) + 10,
+        timestamp: getTimeAgo(Number(roast.timestamp) || Date.now() - Math.random() * 7 * 24 * 60 * 60 * 1000),
+        creator: roast.creator || "Anonymous"
+      }));
+      setRecentRoasts(processedRoasts);
+    } else {
+      // Fallback to generated data if contract data is not available
+      setRecentRoasts(generateFallbackRoasts());
+    }
+  }, [recentRoastsData]);
+
+  // Process recent chain reactions data
+  useEffect(() => {
+    if (recentChainReactionsData && Array.isArray(recentChainReactionsData)) {
+      const processedChains = recentChainReactionsData.map((chain: any, index: number) => ({
+        id: Number(chain.id) || index + 1,
+        title: chain.title || `Chain #${Number(chain.id) || index + 1}`,
+        image: chain.imageUri || "/sample.png",
+        likes: Number(chain.likes) || Math.floor(Math.random() * 300) + 50,
+        timestamp: getTimeAgo(Number(chain.timestamp) || Date.now() - Math.random() * 7 * 24 * 60 * 60 * 1000),
+        creator: chain.creator || "Anonymous",
+        participants: Number(chain.participants) || Math.floor(Math.random() * 20) + 5
+      }));
+      setRecentChainReactions(processedChains);
+    } else {
+      // Fallback to generated data if contract data is not available
+      setRecentChainReactions(generateFallbackChainReactions());
+    }
+  }, [recentChainReactionsData]);
+
+  // Load all badges with requirements and user progress
+  useEffect(() => {
+    const loadBadges = async () => {
+      try {
+        setIsLoadingBadges(true);
+        
+        // TODO: Implement dynamic badge fetching from IPFS
+        // The admin page uploads badges to IPFS, but we need a way to discover them
+        // This could be done through:
+        // 1. A badge registry contract that stores metadata URIs
+        // 2. A centralized IPFS collection
+        // 3. Fetching from the admin contract's badge list
+        
+        // For now, use empty array - badges will be loaded dynamically
+        const allBadges: BadgeData[] = [];
+        
+        console.log("TODO: Implement badge discovery from IPFS");
+
+        setBadges(allBadges);
+      } catch (error) {
+        console.error("Error loading badges:", error);
+      } finally {
+        setIsLoadingBadges(false);
+      }
+    };
+
+    if (address && totalRoasts !== undefined && totalChainReactions !== undefined && totalIcebreakers !== undefined) {
+      loadBadges();
+    }
+  }, [address, totalRoasts, totalChainReactions, totalIcebreakers, userBadges]);
+
+  // Get user level from smart contract
+  const { data: userLevelData } = useReadContract({
+    address: VIBECASTER_POINTS_ADDRESS,
+    abi: VibeCasterPointsABI,
+    functionName: "getUserLevel",
+    args: address ? [address] : undefined,
+  });
+
+  const userLevel = userLevelData ? (userLevelData as [string, number])[0] : "Vibe Newbie";
 
   // Dynamic recent activities based on user's actual activity
   const generateRecentActivities = () => {
@@ -171,18 +343,44 @@ export default function Activity({ setActiveTab }: ActivityProps) {
 
   const recentActivities = generateRecentActivities();
 
-  // Mock gallery data
-  const roastGalleryItems = [
-    { id: 1, title: "Epic Roast #1", image: "/sample.png", likes: 42, timestamp: "2h ago" },
-    { id: 2, title: "Viral Moment", image: "/sample.png", likes: 89, timestamp: "2d ago" },
-    { id: 3, title: "AI Comedy Gold", image: "/sample.png", likes: 156, timestamp: "3d ago" },
-  ];
+  // Handle badge minting
+  const handleMintBadge = async (badgeId: number) => {
+    if (!address) {
+      alert("Please connect your wallet to mint badges");
+      return;
+    }
 
-  const chainGalleryItems = [
-    { id: 1, title: "Chain Challenge", image: "/sample.png", likes: 156, timestamp: "1d ago" },
-    { id: 2, title: "Viral Trend", image: "/sample.png", likes: 234, timestamp: "2d ago" },
-    { id: 3, title: "Community Challenge", image: "/sample.png", likes: 89, timestamp: "4d ago" },
-  ];
+    try {
+      // Call the mint function on the VibeCasterBadges contract
+      writeContract({
+        address: VIBECASTER_BADGES_ADDRESS,
+        abi: VibeCasterBadgesABI,
+        functionName: "mintBadge",
+        args: [badgeId],
+      });
+
+      // Refresh badges after minting
+      // This will be handled by the useEffect that watches userBadges
+    } catch (error) {
+      console.error("Error minting badge:", error);
+      alert("Failed to mint badge. Please try again.");
+    }
+  };
+
+  // Generate temporary access link for private IPFS badge images
+  const getBadgeImageUrl = async (imageUri: string): Promise<string> => {
+    try {
+      // Extract CID from ipfs:// URI
+      const cid = imageUri.replace('ipfs://', '');
+      
+      // For now, use the public gateway as fallback
+      // In production, you'd generate a temporary access link
+      return `${process.env.NEXT_PUBLIC_PINATA_GATEWAY}ipfs/${cid}`;
+    } catch (error) {
+      console.error("Error getting badge image URL:", error);
+      return "/placeholder-badge.svg";
+    }
+  };
 
   return (
     <div className="space-y-6 overflow-x-hidden">
@@ -324,7 +522,7 @@ export default function Activity({ setActiveTab }: ActivityProps) {
               <div className="mt-4 md:mt-6">
                 <h4 className="text-base md:text-lg font-semibold text-vibecaster-lavender mb-3 md:mb-4">Recent Roasts</h4>
                 <div className="space-y-2 md:space-y-3">
-                  {roastGalleryItems.map((item) => (
+                  {recentRoasts.map((item) => (
                     <div key={item.id} className="flex items-center gap-2 md:gap-3 p-2 md:p-3 rounded-lg bg-vibecaster-dark/50 border border-vibecaster-lavender/20">
                       <div className="w-8 h-8 md:w-12 md:h-12 rounded-lg bg-vibecaster-lavender/20 flex items-center justify-center">
                         <FaFire size={16} className="md:w-5 md:h-5 text-red-400" />
@@ -347,7 +545,7 @@ export default function Activity({ setActiveTab }: ActivityProps) {
               <div className="mt-4 md:mt-6">
                 <h4 className="text-base md:text-lg font-semibold text-vibecaster-lavender mb-3 md:mb-4">Chain Reactions</h4>
                 <div className="space-y-2 md:space-y-3">
-                  {chainGalleryItems.map((item) => (
+                  {recentChainReactions.map((item) => (
                     <div key={item.id} className="flex items-center gap-2 md:gap-3 p-2 md:p-3 rounded-lg bg-vibecaster-dark/50 border border-vibecaster-lavender/20">
                       <div className="w-8 h-8 md:w-12 md:h-12 rounded-lg bg-vibecaster-lavender/20 flex items-center justify-center">
                         <FaBolt size={16} className="md:w-5 md:h-5 text-yellow-400" />
@@ -357,6 +555,7 @@ export default function Activity({ setActiveTab }: ActivityProps) {
                         <div className="flex items-center gap-2 md:gap-4 text-xs text-vibecaster-light-purple">
                           <span>{item.likes} likes</span>
                           <span>{item.timestamp}</span>
+                          <span>{item.participants} participants</span>
                         </div>
                       </div>
                     </div>
@@ -374,77 +573,112 @@ export default function Activity({ setActiveTab }: ActivityProps) {
           <div className="flex items-center justify-between mb-4 md:mb-6">
             <h2 className="text-lg md:text-xl font-bold text-white">Your Badges</h2>
             <div className="text-xs md:text-sm text-vibecaster-light-purple">
-              {userBadges.length} of 6 badges earned
+              {userBadges.length} of {badges.length} badges earned
             </div>
           </div>
           
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-3 md:gap-4">
-            {/* First Activity Badge */}
-            <div className={`text-center p-3 md:p-4 rounded-lg border transition-all ${
-              userBadges.length > 0 
+          {isLoadingBadges ? (
+            <div className="text-center py-8">
+              <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-vibecaster-lavender mx-auto"></div>
+              <p className="text-vibecaster-light-purple mt-2">Loading badges...</p>
+            </div>
+          ) : badges.length === 0 ? (
+            <div className="text-center py-8">
+              <div className="text-vibecaster-light-purple">
+                <p className="text-lg mb-2">No badges available yet</p>
+                <p className="text-sm text-vibecaster-lavender/70">
+                  Admins need to upload badges to IPFS first
+                </p>
+                <p className="text-xs mt-2 text-vibecaster-lavender/50">
+                  Check the admin page to upload badge images
+                </p>
+              </div>
+            </div>
+          ) : (
+            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-3 md:gap-4">
+              {badges.map((badge) => (
+                <div
+                  key={badge.id}
+                  className={`text-center p-3 md:p-4 rounded-lg border transition-all cursor-pointer ${
+                    badge.isMinted
                 ? 'bg-vibecaster-lavender/20 border-vibecaster-lavender text-white' 
+                      : badge.isUnlocked
+                      ? 'bg-vibecaster-dark/50 border-vibecaster-lavender text-white hover:bg-vibecaster-lavender/10'
                 : 'bg-vibecaster-dark/50 border-vibecaster-lavender/20 text-vibecaster-lavender/50'
-            }`}>
-              <FaStar size={20} className="mx-auto mb-1 md:mb-2 md:w-6 md:h-6" />
-              <div className="text-xs font-medium">First Activity</div>
-              <div className="text-xs text-vibecaster-light-purple">Complete 1 activity</div>
+                  }`}
+                  onClick={() => badge.isUnlocked && !badge.isMinted && handleMintBadge(badge.id)}
+                  title={badge.isUnlocked && !badge.isMinted ? `Click to mint ${badge.name}` : badge.description}
+                >
+                  {/* Badge Icon with Blur Effect */}
+                  <div className="relative mb-2">
+                    {badge.isMinted ? (
+                      // Show actual badge image when minted
+                      <img
+                        src={`${process.env.NEXT_PUBLIC_PINATA_GATEWAY}ipfs/${badge.imageUri.replace('ipfs://', '')}`}
+                        alt={badge.name}
+                        className="w-12 h-12 md:w-16 md:h-16 mx-auto rounded-lg"
+                        onError={(e) => {
+                          e.currentTarget.src = "/placeholder-badge.svg";
+                        }}
+                      />
+                    ) : badge.isUnlocked ? (
+                      // Show unblurred image when unlocked but not minted
+                      <img
+                        src={`${process.env.NEXT_PUBLIC_PINATA_GATEWAY}ipfs/${badge.imageUri.replace('ipfs://', '')}`}
+                        alt={badge.name}
+                        className="w-12 h-12 md:w-16 md:h-16 mx-auto rounded-lg"
+                        onError={(e) => {
+                          e.currentTarget.src = "/placeholder-badge.svg";
+                        }}
+                      />
+                    ) : (
+                      // Show blurred image when locked
+                      <div className="relative">
+                        <img
+                          src={`${process.env.NEXT_PUBLIC_PINATA_GATEWAY}ipfs/${badge.imageUri.replace('ipfs://', '')}`}
+                          alt={badge.name}
+                          className="w-12 h-12 md:w-16 md:h-16 mx-auto rounded-lg filter blur-sm opacity-50"
+                          onError={(e) => {
+                            e.currentTarget.src = "/placeholder-badge.svg";
+                          }}
+                        />
+                        <div className="absolute inset-0 flex items-center justify-center">
+                          <FaLock size={16} className="text-vibecaster-lavender/50" />
+                        </div>
+                      </div>
+                    )}
             </div>
 
-            {/* Login Streak Badge */}
-            <div className={`text-center p-3 md:p-4 rounded-lg border transition-all ${
-              userBadges.length > 1 
-                ? 'bg-vibecaster-lavender/20 border-vibecaster-lavender text-white' 
-                : 'bg-vibecaster-dark/50 border-vibecaster-lavender/20 text-vibecaster-lavender/50'
-            }`}>
-              <FaCrown size={20} className="mx-auto mb-1 md:mb-2 md:w-6 md:h-6" />
-              <div className="text-xs font-medium">Login Streak</div>
-              <div className="text-xs text-vibecaster-light-purple">7 day streak</div>
+                  {/* Badge Name */}
+                  <div className="text-xs font-medium mb-1">{badge.name}</div>
+                  
+                  {/* Progress and Status */}
+                  <div className="text-xs text-vibecaster-light-purple">
+                    {badge.isMinted ? (
+                      <span className="text-green-400">✓ Minted</span>
+                    ) : badge.isUnlocked ? (
+                      <span className="text-yellow-400">Ready to Mint!</span>
+                    ) : (
+                      <span>{badge.currentValue}/{badge.requirementValue} {badge.requirement}</span>
+                    )}
             </div>
 
-            {/* Activity Streak Badge */}
-            <div className={`text-center p-3 md:p-4 rounded-lg border transition-all ${
-              userBadges.length > 2 
-                ? 'bg-vibecaster-lavender/20 border-vibecaster-lavender text-white' 
-                : 'bg-vibecaster-dark/50 border-vibecaster-lavender/20 text-vibecaster-lavender/50'
-            }`}>
-              <FaMedal size={20} className="mx-auto mb-1 md:mb-2 md:w-6 md:h-6" />
-              <div className="text-xs font-medium">Activity Streak</div>
-              <div className="text-xs text-vibecaster-light-purple">5 day activity</div>
+                  {/* Rarity Badge */}
+                  <div className="mt-1">
+                    <span className={`text-xs px-2 py-1 rounded-full ${
+                      badge.rarity === 'Common' ? 'bg-gray-500/20 text-gray-300' :
+                      badge.rarity === 'Uncommon' ? 'bg-green-500/20 text-green-300' :
+                      badge.rarity === 'Rare' ? 'bg-blue-500/20 text-blue-300' :
+                      badge.rarity === 'Epic' ? 'bg-purple-500/20 text-purple-300' :
+                      'bg-yellow-500/20 text-yellow-300'
+                    }`}>
+                      {badge.rarity}
+                    </span>
+                  </div>
             </div>
-
-            {/* Top Roaster Badge */}
-            <div className={`text-center p-3 md:p-4 rounded-lg border transition-all ${
-              userBadges.length > 3 
-                ? 'bg-vibecaster-lavender/20 border-vibecaster-lavender text-white' 
-                : 'bg-vibecaster-dark/50 border-vibecaster-lavender/20 text-vibecaster-lavender/50'
-            }`}>
-              <FaFire size={20} className="mx-auto mb-1 md:mb-2 md:w-6 md:h-6" />
-              <div className="text-xs font-medium">Top Roaster</div>
-              <div className="text-xs text-vibecaster-light-purple">10 roasts</div>
+              ))}
             </div>
-
-            {/* Chain Master Badge */}
-            <div className={`text-center p-3 md:p-4 rounded-lg border transition-all ${
-              userBadges.length > 4 
-                ? 'bg-vibecaster-lavender/20 border-vibecaster-lavender text-white' 
-                : 'bg-vibecaster-dark/50 border-vibecaster-lavender/20 text-vibecaster-lavender/50'
-            }`}>
-              <FaBolt size={20} className="mx-auto mb-1 md:mb-2 md:w-6 md:h-6" />
-              <div className="text-xs font-medium">Chain Master</div>
-              <div className="text-xs text-vibecaster-light-purple">5 chains</div>
-            </div>
-
-            {/* Icebreaker Badge */}
-            <div className={`text-center p-3 md:p-4 rounded-lg border transition-all ${
-              userBadges.length > 5 
-                ? 'bg-vibecaster-lavender/20 border-vibecaster-lavender text-white' 
-                : 'bg-vibecaster-dark/50 border-vibecaster-lavender/20 text-vibecaster-lavender/50'
-            }`}>
-              <FaSnowflake size={20} className="mx-auto mb-1 md:mb-2 md:w-6 md:h-6" />
-              <div className="text-xs font-medium">Icebreaker</div>
-              <div className="text-xs text-vibecaster-light-purple">10 responses</div>
-            </div>
-          </div>
+          )}
         </div>
       </div>
 
